@@ -3,7 +3,7 @@
 
 <head>
 
-<title>SKY ADDA</title>
+<title>SKY ADDA LOGIN</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -11,123 +11,35 @@ content="width=device-width, initial-scale=1.0">
 <style>
 
 body{
-margin:0;
+background:black;
 font-family:Arial;
-background:#e8dfb9;
+text-align:center;
+padding-top:100px;
 }
 
-.topbar{
-background:black;
+h1{
 color:white;
-padding:20px;
-text-align:center;
-font-size:35px;
-font-weight:bold;
+margin-bottom:40px;
+font-size:40px;
 }
 
-.wallet{
-display:flex;
-justify-content:space-around;
-margin-top:30px;
-}
-
-.box{
-background:white;
-width:140px;
-height:140px;
-border-radius:20px;
-text-align:center;
-padding-top:20px;
-font-size:35px;
-font-weight:bold;
-box-shadow:0 0 15px rgba(0,0,0,0.2);
-}
-
-.box p{
+input{
+width:80%;
+padding:15px;
+margin:10px;
+border:none;
+border-radius:10px;
 font-size:20px;
-margin-top:10px;
 }
 
-.mainbtn{
-margin-top:25px;
-padding:18px 40px;
-font-size:24px;
-background:#00c9ff;
-color:white;
-border:none;
-border-radius:15px;
-font-weight:bold;
-}
-
-.battle{
-background:white;
-margin:20px;
-padding:25px;
-border-radius:20px;
-box-shadow:0 0 15px rgba(0,0,0,0.2);
-text-align:center;
-}
-
-.battle h2{
-font-size:35px;
-}
-
-.battle button{
+button{
 padding:15px 30px;
-font-size:25px;
-background:#00d09c;
-color:white;
+margin:10px;
 border:none;
-border-radius:12px;
-margin-top:20px;
-}
-
-.notice{
-background:black;
-color:white;
-margin:20px;
-padding:20px;
-font-size:22px;
-border-radius:20px;
-text-align:center;
-}
-
-.running{
-background:white;
-margin:20px;
-padding:20px;
-border-radius:20px;
-}
-
-.run-card{
-display:flex;
-justify-content:space-between;
-background:#f2f2f2;
-padding:20px;
-margin-top:15px;
-border-radius:15px;
-font-size:24px;
-}
-
-.bottom{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:black;
-display:flex;
-justify-content:space-around;
-padding:10px;
-color:white;
-}
-
-.item{
-text-align:center;
-font-size:18px;
-}
-
-a{
-text-decoration:none;
+border-radius:10px;
+background:cyan;
+font-size:20px;
+font-weight:bold;
 }
 
 </style>
@@ -136,146 +48,31 @@ text-decoration:none;
 
 <body>
 
-<div class="topbar">
+<h1>SKY ADDA LOGIN</h1>
 
-SKY ADDA
+<input
+type="email"
+id="email"
+placeholder="Enter Email">
 
-</div>
-
-<div class="wallet">
-
-<div class="box">
-
-💰 ₹<span id="wallet">0</span>
-
-<p>Wallet</p>
-
-</div>
-
-<div class="box">
-
-🏆 ₹0
-
-<p>Winning</p>
-
-</div>
-
-</div>
-
-<center>
-
-<a href="payment.html">
-
-<button class="mainbtn">
-
-Add Money
-
-</button>
-
-</a>
+<input
+type="password"
+id="password"
+placeholder="Enter Password">
 
 <br>
 
-<a href="withdraw.html">
+<button id="signup">
 
-<button class="mainbtn">
-
-Withdraw
+Signup
 
 </button>
 
-</a>
+<button id="login">
 
-</center>
-
-<div class="battle">
-
-<h2>🎮 Play Ludo</h2>
-
-<p style="font-size:24px;">
-Entry Fee ₹10
-</p>
-
-<a href="ludo.html">
-
-<button>
-
-PLAY NOW
+Login
 
 </button>
-
-</a>
-
-</div>
-
-<div class="battle">
-
-<h2>Open Battle</h2>
-
-<button>
-
-SET BATTLE
-
-</button>
-
-</div>
-
-<div class="notice">
-
-⚠️ Game पूरा होने के बाद सही रिजल्ट डालें
-
-</div>
-
-<div class="running">
-
-<h2>Running Battles</h2>
-
-<div class="run-card">
-
-<div>Classic Battle</div>
-
-<div>₹50</div>
-
-</div>
-
-<div class="run-card">
-
-<div>Classic Battle</div>
-
-<div>₹100</div>
-
-</div>
-
-</div>
-
-<div class="bottom">
-
-<div class="item">
-🏠
-<p>Home</p>
-</div>
-
-<div class="item">
-💰
-<p>Wallet</p>
-</div>
-
-<div class="item">
-🎁
-<p>Refer</p>
-</div>
-
-<div class="item">
-☎️
-<p>Support</p>
-</div>
-
-<div class="item">
-👤
-<p>Profile</p>
-</div>
-
-</div>
 
 <script type="module">
 
@@ -285,9 +82,19 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+
 getFirestore,
 doc,
-getDoc
+setDoc
 
 }
 
@@ -295,7 +102,7 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBNNnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
 
 authDomain: "skyadda-1d849.firebaseapp.com",
 
@@ -311,26 +118,83 @@ appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
 
 const app = initializeApp(firebaseConfig);
 
+const auth = getAuth(app);
+
 const db = getFirestore(app);
 
-let uid = localStorage.getItem("uid");
+document.getElementById("signup")
+.addEventListener("click", async()=>{
 
-async function loadWallet(){
+const email =
+document.getElementById("email").value;
 
-const ref = doc(db,"users",uid);
+const password =
+document.getElementById("password").value;
 
-const snap = await getDoc(ref);
+try{
 
-if(snap.exists()){
+const userCredential =
 
-document.getElementById("wallet")
-.innerHTML = snap.data().money || 0;
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user = userCredential.user;
+
+await setDoc(doc(db,"users",user.uid),{
+
+money:0
+
+});
+
+alert("Signup Success");
+
+}catch(error){
+
+alert(error.message);
 
 }
 
+});
+
+document.getElementById("login")
+.addEventListener("click", async()=>{
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+try{
+
+const userCredential =
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+localStorage.setItem(
+"uid",
+userCredential.user.uid
+);
+
+alert("Login Success");
+
+window.location.href =
+"index.html";
+
+}catch(error){
+
+alert(error.message);
+
 }
 
-loadWallet();
+});
 
 </script>
 
