@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Profile</title>
+<title>My Profile</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -34,16 +34,37 @@ font-size:22px;
 line-height:45px;
 }
 
-button{
+input{
+width:90%;
+padding:15px;
+font-size:20px;
+border:none;
+border-radius:12px;
+margin-top:10px;
+}
+
+.savebtn{
 width:90%;
 padding:18px;
-font-size:24px;
+font-size:22px;
+border:none;
+border-radius:15px;
+background:#00cfff;
+color:white;
+font-weight:bold;
+margin-top:25px;
+}
+
+.logout{
+width:90%;
+padding:18px;
+font-size:22px;
 border:none;
 border-radius:15px;
 background:red;
 color:white;
 font-weight:bold;
-margin-top:30px;
+margin-top:20px;
 }
 
 </style>
@@ -61,24 +82,43 @@ margin-top:30px;
 <div class="box">
 
 👤 User Name :
-Neeraj
-
 <br>
+
+<input
+type="text"
+id="name"
+placeholder="Enter Name">
+
+<br><br>
 
 📧 Email ID :
-user@gmail.com
-
 <br>
+
+<span id="email">
+
+Loading...
+
+</span>
+
+<br><br>
 
 💰 Wallet Balance :
-₹0
+₹<span id="wallet">
 
-<br>
+0
+
+</span>
+
+<br><br>
 
 🏆 Winning Balance :
-₹0
+₹<span id="winning">
 
-<br>
+0
+
+</span>
+
+<br><br>
 
 🆔 User UID :
 <br>
@@ -92,20 +132,41 @@ Loading...
 <br><br>
 
 📱 Mobile Number :
-9876543210
-
 <br>
+
+<input
+type="number"
+id="mobile"
+placeholder="Enter Mobile Number">
+
+<br><br>
 
 💸 Withdraw History :
 <br>
 
+<span id="history">
+
 No Withdraw Yet
 
-</div>
+</span>
+
+<br>
 
 <center>
 
-<button onclick="logout()">
+<button
+class="savebtn"
+onclick="saveProfile()">
+
+SAVE PROFILE
+
+</button>
+
+<br>
+
+<button
+class="logout"
+onclick="logout()">
 
 🚪 LOGOUT
 
@@ -113,13 +174,126 @@ No Withdraw Yet
 
 </center>
 
-<script>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getAuth
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+
+getFirestore,
+doc,
+getDoc,
+updateDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
+authDomain: "skyadda-1d849.firebaseapp.com",
+
+projectId: "skyadda-1d849",
+
+storageBucket: "skyadda-1d849.firebasestorage.app",
+
+messagingSenderId: "929894889505",
+
+appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+let uid = localStorage.getItem("uid");
 
 document.getElementById("uid")
-.innerHTML =
-localStorage.getItem("uid");
+.innerHTML = uid;
 
-function logout(){
+setTimeout(()=>{
+
+if(auth.currentUser){
+
+document.getElementById("email")
+.innerHTML =
+auth.currentUser.email;
+
+}
+
+},2000);
+
+async function loadProfile(){
+
+const ref = doc(db,"users",uid);
+
+const snap = await getDoc(ref);
+
+if(snap.exists()){
+
+const data = snap.data();
+
+document.getElementById("wallet")
+.innerHTML = data.money || 0;
+
+document.getElementById("winning")
+.innerHTML = data.winning || 0;
+
+document.getElementById("name")
+.value = data.name || "";
+
+document.getElementById("mobile")
+.value = data.mobile || "";
+
+document.getElementById("history")
+.innerHTML =
+data.history || "No Withdraw Yet";
+
+}
+
+}
+
+loadProfile();
+
+window.saveProfile = async function(){
+
+let name =
+document.getElementById("name").value;
+
+let mobile =
+document.getElementById("mobile").value;
+
+const ref = doc(db,"users",uid);
+
+await updateDoc(ref,{
+
+name:name,
+mobile:mobile
+
+});
+
+alert("Profile Saved");
+
+}
+
+window.logout = function(){
 
 localStorage.clear();
 
