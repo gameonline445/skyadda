@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Profile</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+}
+
+.top{
+background:black;
+padding:20px;
+text-align:center;
+font-size:35px;
+font-weight:bold;
+}
+
+.box{
+background:#1e1e1e;
+margin:20px;
+padding:25px;
+border-radius:20px;
+font-size:22px;
+line-height:45px;
+}
+
+button{
+width:90%;
+padding:18px;
+font-size:24px;
+border:none;
+border-radius:15px;
+background:red;
+color:white;
+font-weight:bold;
+margin-top:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+👤 MY PROFILE
+
+</div>
+
+<div class="box">
+
+👤 User Name :
+Neeraj
+
+<br>
+
+📧 Email ID :
+user@gmail.com
+
+<br>
+
+💰 Wallet Balance :
+₹0
+
+<br>
+
+🏆 Winning Balance :
+₹0
+
+<br>
+
+🆔 User UID :
+<br>
+
+<span id="uid">
+
+Loading...
+
+</span>
+
+<br><br>
+
+📱 Mobile Number :
+9876543210
+
+<br>
+
+💸 Withdraw History :
+<br>
+
+No Withdraw Yet
+
+</div>
+
+<center>
+
+<button onclick="logout()">
+
+🚪 LOGOUT
+
+</button>
+
+</center>
+
+<script>
+
+document.getElementById("uid")
+.innerHTML =
+localStorage.getItem("uid");
+
+function logout(){
+
+localStorage.clear();
+
+window.location.href =
+"login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
