@@ -144,7 +144,9 @@ ${data.status}
 <br>
 
 <button
-onclick="approveMoney('${data.uid}',${data.amount})">
+class="addbtn"
+data-uid="${data.uid}"
+data-amount="${data.amount}">
 
 ADD MONEY
 
@@ -160,8 +162,17 @@ ADD MONEY
 
 loadRequests();
 
-window.approveMoney =
-async function(uid,amount){
+document.addEventListener("click",
+
+async function(e){
+
+if(e.target.classList.contains("addbtn")){
+
+let uid =
+e.target.getAttribute("data-uid");
+
+let amount =
+e.target.getAttribute("data-amount");
 
 const userRef =
 doc(db,"users",uid);
@@ -190,6 +201,8 @@ location.reload();
 }
 
 }
+
+});
 
 </script>
 
