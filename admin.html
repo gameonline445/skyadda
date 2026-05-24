@@ -3,7 +3,7 @@
 
 <head>
 
-<title>ADMIN PANEL</title>
+<title>Admin Panel</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -13,52 +13,36 @@ content="width=device-width, initial-scale=1.0">
 body{
 margin:0;
 font-family:Arial;
-background:#000;
+background:#111;
 color:white;
 text-align:center;
 }
 
 .top{
 background:black;
-padding:25px;
-font-size:40px;
+padding:20px;
+font-size:35px;
 font-weight:bold;
-border-bottom:3px solid yellow;
 }
 
 .box{
 background:#1e1e1e;
-margin:30px;
-padding:30px;
-border-radius:25px;
-box-shadow:0 0 20px rgba(255,255,255,0.1);
-}
-
-input{
-width:90%;
-padding:18px;
-font-size:22px;
-margin-top:20px;
-border:none;
-border-radius:15px;
-outline:none;
+margin:20px;
+padding:20px;
+border-radius:20px;
+font-size:20px;
+line-height:40px;
 }
 
 button{
-padding:18px 40px;
-font-size:24px;
-margin-top:25px;
+padding:15px 30px;
+font-size:20px;
 border:none;
-border-radius:15px;
+border-radius:12px;
 background:#00cfff;
 color:white;
 font-weight:bold;
-}
-
-#status{
-margin-top:25px;
-font-size:24px;
-color:#00ff99;
+margin-top:15px;
 }
 
 </style>
@@ -73,53 +57,139 @@ color:#00ff99;
 
 </div>
 
+<div id="requests">
+
+Loading Requests...
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs,
+doc,
+getDoc,
+updateDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
+authDomain: "skyadda-1d849.firebaseapp.com",
+
+projectId: "skyadda-1d849",
+
+storageBucket: "skyadda-1d849.firebasestorage.app",
+
+messagingSenderId: "929894889505",
+
+appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const requestBox =
+document.getElementById("requests");
+
+async function loadRequests(){
+
+const querySnapshot =
+await getDocs(
+collection(db,"depositRequests")
+);
+
+requestBox.innerHTML = "";
+
+querySnapshot.forEach((docSnap)=>{
+
+const data = docSnap.data();
+
+requestBox.innerHTML += `
+
 <div class="box">
 
-<h1>Add Wallet Balance</h1>
+🆔 UID:
+<br>
+${data.uid}
 
-<input
-type="text"
-id="userid"
-placeholder="Enter User UID">
+<br><br>
 
-<input
-type="number"
-id="money"
-placeholder="Enter Amount">
+💰 Amount:
+₹${data.amount}
 
-<button onclick="addMoney()">
+<br><br>
+
+🧾 UTR:
+${data.utr}
+
+<br><br>
+
+📌 Status:
+${data.status}
+
+<br>
+
+<button onclick="approveMoney(
+'${data.uid}',
+${data.amount}
+)">
 
 ADD MONEY
 
 </button>
 
-<div id="status"></div>
-
 </div>
 
-<script>
+`;
 
-function addMoney(){
-
-let uid =
-document.getElementById("userid").value;
-
-let money =
-document.getElementById("money").value;
-
-if(uid == "" || money == ""){
-
-document.getElementById("status")
-.innerHTML =
-"❌ Fill All Fields";
-
-return;
+});
 
 }
 
-document.getElementById("status")
-.innerHTML =
-"✅ Money Added Successfully";
+loadRequests();
+
+window.approveMoney =
+async function(uid,amount){
+
+const userRef =
+doc(db,"users",uid);
+
+const snap =
+await getDoc(userRef);
+
+if(snap.exists()){
+
+const data = snap.data();
+
+let currentMoney =
+data.money || 0;
+
+await updateDoc(userRef,{
+
+money:
+currentMoney + Number(amount)
+
+});
+
+alert("Money Added");
+
+location.reload();
+
+}
 
 }
 
