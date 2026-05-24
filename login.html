@@ -21,9 +21,8 @@ input{
 width:80%;
 padding:15px;
 margin:10px;
-border-radius:10px;
 border:none;
-font-size:18px;
+border-radius:10px;
 }
 
 button{
@@ -31,10 +30,9 @@ padding:15px 30px;
 margin:10px;
 border:none;
 border-radius:10px;
-background:#00e5ff;
+background:cyan;
 font-size:18px;
-color:black;
-font-weight:bold;
+border-radius:10px;
 }
 
 </style>
@@ -65,73 +63,51 @@ signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-
 apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
-
 authDomain: "skyadda-1d849.firebaseapp.com",
-
 projectId: "skyadda-1d849",
-
 storageBucket: "skyadda-1d849.firebasestorage.app",
-
 messagingSenderId: "929894889505",
-
-appId: "1:929894889505:web:6e76e0eb701ffe89d60b60",
-
-measurementId: "G-GPT48HDF0K"
-
+appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
 };
 
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-const email = document.getElementById("email");
+document.getElementById("signup").addEventListener("click", ()=>{
 
-const password = document.getElementById("password");
+const email = document.getElementById("email").value;
 
-document.getElementById("signup").addEventListener("click", () => {
+const password = document.getElementById("password").value;
 
-createUserWithEmailAndPassword(
-auth,
-email.value,
-password.value
-)
+createUserWithEmailAndPassword(auth,email,password)
 
-.then(() => {
-
+.then(()=>{
 alert("Signup Success");
-
 })
 
-.catch((error) => {
-
+.catch((error)=>{
 alert(error.message);
-
 });
 
 });
 
-document.getElementById("login").addEventListener("click", () => {
+document.getElementById("login").addEventListener("click", ()=>{
 
-signInWithEmailAndPassword(
-auth,
-email.value,
-password.value
-)
+const email = document.getElementById("email").value;
 
-.then(() => {
+const password = document.getElementById("password").value;
 
+signInWithEmailAndPassword(auth,email,password)
+
+.then(()=>{
 alert("Login Success");
-
-window.location.href = "index.html";
-
+window.location.href="index.html";
 })
 
-.catch((error) => {
-
+.catch((error)=>{
 alert(error.message);
-
 });
 
 });
