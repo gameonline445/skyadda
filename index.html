@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>SKY ADDA</title>
 
@@ -20,7 +21,9 @@
 <div class="topbar">
 
 <div class="menu-icon">
+
 ☰
+
 </div>
 
 <h1>SKY ADDA</h1>
@@ -32,16 +35,32 @@
 <div class="wallet">
 
 <div class="box">
-💰 ₹0
+
+💰 ₹<span id="wallet">0</span>
+
 <p>Wallet</p>
+
 </div>
 
 <div class="box">
-🏆 ₹0
+
+🏆 ₹<span id="winning">0</span>
+
 <p>Winning</p>
+
 </div>
 
 </div>
+
+<center>
+
+<button id="addmoney">
+
+Add Money
+
+</button>
+
+</center>
 
 <!-- BATTLE -->
 
@@ -49,11 +68,16 @@
 
 <h2>Open Battle</h2>
 
-<input type="number" placeholder="Enter Amount">
+<input type="number"
+placeholder="Enter Amount">
 
 <br>
 
-<button>SET</button>
+<button>
+
+SET
+
+</button>
 
 </div>
 
@@ -74,11 +98,15 @@
 <div class="run-card">
 
 <div>
+
 Classic Battle
+
 </div>
 
 <div>
+
 ₹50
+
 </div>
 
 </div>
@@ -86,11 +114,15 @@ Classic Battle
 <div class="run-card">
 
 <div>
+
 Classic Battle
+
 </div>
 
 <div>
+
 ₹100
+
 </div>
 
 </div>
@@ -98,11 +130,15 @@ Classic Battle
 <div class="run-card">
 
 <div>
+
 Classic Battle
+
 </div>
 
 <div>
+
 ₹200
+
 </div>
 
 </div>
@@ -114,28 +150,43 @@ Classic Battle
 <div class="bottom-menu">
 
 <div class="item">
+
 🏠
+
 <p>Home</p>
+
 </div>
 
 <div class="item">
+
 💰
+
 <p>Wallet</p>
+
 </div>
 
 <div class="item">
+
 🎁
+
 <p>Refer</p>
+
 </div>
 
 <div class="item">
+
 ☎️
+
 <p>Support</p>
+
 </div>
 
 <div class="item">
+
 👤
+
 <p>Profile</p>
+
 </div>
 
 </div>
@@ -143,6 +194,8 @@ Classic Battle
 <!-- FIREBASE -->
 
 <script type="module" src="firebase.js"></script>
+
+<script type="module" src="wallet.js"></script>
 
 </body>
 
