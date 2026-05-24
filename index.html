@@ -1,3 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>SKY ADDA</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#e8dfb9;
+}
+
+.topbar{
+background:black;
+color:white;
+padding:20px;
+text-align:center;
+font-size:35px;
+font-weight:bold;
+}
+
+.wallet{
+display:flex;
+justify-content:space-around;
+margin-top:30px;
+}
+
+.box{
+background:white;
+width:140px;
+height:140px;
+border-radius:20px;
+text-align:center;
+padding-top:20px;
+font-size:35px;
+font-weight:bold;
+box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+.box p{
+font-size:20px;
+margin-top:10px;
+}
+
+.mainbtn{
+margin-top:25px;
+padding:18px 40px;
+font-size:24px;
+background:#00c9ff;
+color:white;
+border:none;
+border-radius:15px;
+font-weight:bold;
+}
+
+.battle{
+background:white;
+margin:20px;
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 15px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+.battle h2{
+font-size:35px;
+}
+
+.battle button{
+padding:15px 30px;
+font-size:25px;
+background:#00d09c;
+color:white;
+border:none;
+border-radius:12px;
+margin-top:20px;
+}
+
+.notice{
+background:black;
+color:white;
+margin:20px;
+padding:20px;
+font-size:22px;
+border-radius:20px;
+text-align:center;
+}
+
+.running{
+background:white;
+margin:20px;
+padding:20px;
+border-radius:20px;
+}
+
+.run-card{
+display:flex;
+justify-content:space-between;
+background:#f2f2f2;
+padding:20px;
+margin-top:15px;
+border-radius:15px;
+font-size:24px;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:black;
+display:flex;
+justify-content:space-around;
+padding:10px;
+color:white;
+}
+
+.item{
+text-align:center;
+font-size:18px;
+}
+
+a{
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+SKY ADDA
+
+</div>
+
+<div class="wallet">
+
+<div class="box">
+
+💰 ₹<span id="wallet">0</span>
+
+<p>Wallet</p>
+
+</div>
+
+<div class="box">
+
+🏆 ₹0
+
+<p>Winning</p>
+
+</div>
+
+</div>
+
+<center>
+
+<a href="payment.html">
+
+<button class="mainbtn">
+
+Add Money
+
+</button>
+
+</a>
+
+<br>
+
+<a href="withdraw.html">
+
+<button class="mainbtn">
+
+Withdraw
+
+</button>
+
+</a>
+
+</center>
+
+<div class="battle">
+
+<h2>🎮 Play Ludo</h2>
+
+<p style="font-size:24px;">
+Entry Fee ₹10
+</p>
+
+<a href="ludo.html">
+
+<button>
+
+PLAY NOW
+
+</button>
+
+</a>
+
+</div>
+
+<div class="battle">
+
+<h2>Open Battle</h2>
+
+<button>
+
+SET BATTLE
+
+</button>
+
+</div>
+
+<div class="notice">
+
+⚠️ Game पूरा होने के बाद सही रिजल्ट डालें
+
+</div>
+
+<div class="running">
+
+<h2>Running Battles</h2>
+
+<div class="run-card">
+
+<div>Classic Battle</div>
+
+<div>₹50</div>
+
+</div>
+
+<div class="run-card">
+
+<div>Classic Battle</div>
+
+<div>₹100</div>
+
+</div>
+
+</div>
+
+<div class="bottom">
+
+<div class="item">
+🏠
+<p>Home</p>
+</div>
+
+<div class="item">
+💰
+<p>Wallet</p>
+</div>
+
+<div class="item">
+🎁
+<p>Refer</p>
+</div>
+
+<div class="item">
+☎️
+<p>Support</p>
+</div>
+
+<div class="item">
+👤
+<p>Profile</p>
+</div>
+
+</div>
+
 <script type="module">
 
 import { initializeApp }
@@ -54,3 +333,7 @@ document.getElementById("wallet")
 loadWallet();
 
 </script>
+
+</body>
+
+</html>
