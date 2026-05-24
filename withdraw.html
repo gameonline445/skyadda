@@ -13,20 +13,22 @@ content="width=device-width, initial-scale=1.0">
 body{
 margin:0;
 font-family:Arial;
-background:black;
+background:#111;
 color:white;
 text-align:center;
 }
 
-h1{
-margin-top:30px;
-font-size:40px;
+.top{
+background:black;
+padding:20px;
+font-size:35px;
+font-weight:bold;
 }
 
 .box{
 background:#1e1e1e;
 margin:30px;
-padding:25px;
+padding:30px;
 border-radius:20px;
 }
 
@@ -34,26 +36,21 @@ input{
 width:90%;
 padding:18px;
 font-size:22px;
-margin-top:20px;
 border:none;
-border-radius:12px;
+border-radius:15px;
+margin-top:20px;
 }
 
 button{
-padding:18px 35px;
+width:90%;
+padding:18px;
 font-size:24px;
-margin-top:25px;
 border:none;
-border-radius:12px;
-background:#00cfff;
+border-radius:15px;
+background:red;
 color:white;
 font-weight:bold;
-}
-
-#status{
-margin-top:20px;
-font-size:22px;
-color:#00ff99;
+margin-top:25px;
 }
 
 </style>
@@ -62,53 +59,116 @@ color:#00ff99;
 
 <body>
 
-<h1>💸 Withdraw Money</h1>
+<div class="top">
+
+💸 WITHDRAW
+
+</div>
 
 <div class="box">
+
+<h2>Enter Withdraw Amount</h2>
 
 <input
 type="number"
 id="amount"
 placeholder="Enter Amount">
 
-<input
-type="text"
-id="upi"
-placeholder="Enter UPI ID">
+<br>
 
-<button onclick="sendWithdraw()">
+<button onclick="withdrawMoney()">
 
-SEND REQUEST
+WITHDRAW NOW
 
 </button>
 
-<div id="status"></div>
-
 </div>
 
-<script>
+<script type="module">
 
-function sendWithdraw(){
+import { initializeApp }
 
-let amount =
-document.getElementById("amount").value;
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-let upi =
-document.getElementById("upi").value;
+import {
 
-if(amount == "" || upi == ""){
+getFirestore,
+doc,
+getDoc,
+updateDoc
 
-document.getElementById("status")
-.innerHTML =
-"❌ Fill All Fields";
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
+authDomain: "skyadda-1d849.firebaseapp.com",
+
+projectId: "skyadda-1d849",
+
+storageBucket: "skyadda-1d849.firebasestorage.app",
+
+messagingSenderId: "929894889505",
+
+appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+let uid = localStorage.getItem("uid");
+
+window.withdrawMoney = async function(){
+
+let amount = Number(
+document.getElementById("amount").value
+);
+
+const ref = doc(db,"users",uid);
+
+const snap = await getDoc(ref);
+
+if(snap.exists()){
+
+const data = snap.data();
+
+let currentMoney = data.money || 0;
+
+let currentWithdraw = data.withdraw || 0;
+
+let history = data.history || "";
+
+if(amount > currentMoney){
+
+alert("Insufficient Balance");
 
 return;
 
 }
 
-document.getElementById("status")
-.innerHTML =
-"✅ Withdraw Request Sent";
+await updateDoc(ref,{
+
+money: currentMoney - amount,
+
+withdraw: currentWithdraw + amount,
+
+history:
+history +
+"<br>💸 Withdraw ₹" + amount
+
+});
+
+alert("Withdraw Successful");
+
+window.location.href =
+"wallet.html";
+
+}
 
 }
 
