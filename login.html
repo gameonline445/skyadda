@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Sky Adda Login</title>
+
+<title>SKY ADDA LOGIN</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <style>
 
@@ -15,104 +20,186 @@ padding-top:100px;
 h1{
 color:white;
 margin-bottom:40px;
+font-size:55px;
 }
 
 input{
 width:80%;
-padding:15px;
-margin:10px;
+padding:18px;
+margin:12px;
 border:none;
-border-radius:10px;
+border-radius:12px;
+font-size:22px;
 }
 
 button{
-padding:15px 30px;
+padding:16px 35px;
 margin:10px;
 border:none;
-border-radius:10px;
-background:cyan;
-font-size:18px;
-border-radius:10px;
+border-radius:12px;
+background:#00d9ff;
+font-size:22px;
+font-weight:bold;
+color:white;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <h1>SKY ADDA LOGIN</h1>
 
-<input type="email" id="email" placeholder="Enter Email">
+<input
+type="email"
+id="email"
+placeholder="Enter Email">
 
-<input type="password" id="password" placeholder="Enter Password">
+<input
+type="password"
+id="password"
+placeholder="Enter Password">
 
 <br>
 
-<button id="signup">Signup</button>
+<button id="signup">
 
-<button id="login">Login</button>
+Signup
+
+</button>
+
+<button id="login">
+
+Login
+
+</button>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
+
 getAuth,
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+
+getFirestore,
+doc,
+setDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
+apiKey: "AIzaSyBNNnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
 authDomain: "skyadda-1d849.firebaseapp.com",
+
 projectId: "skyadda-1d849",
+
 storageBucket: "skyadda-1d849.firebasestorage.app",
+
 messagingSenderId: "929894889505",
+
 appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+
 };
 
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-document.getElementById("signup").addEventListener("click", ()=>{
+const db = getFirestore(app);
 
-const email = document.getElementById("email").value;
+document.getElementById("signup")
+.addEventListener("click", async()=>{
 
-const password = document.getElementById("password").value;
+const email =
+document.getElementById("email").value;
 
-createUserWithEmailAndPassword(auth,email,password)
+const password =
+document.getElementById("password").value;
 
-.then(()=>{
+try{
+
+const userCredential =
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user = userCredential.user;
+
+await setDoc(doc(db,"users",user.uid),{
+
+money:0
+
+});
+
 alert("Signup Success");
-})
 
-.catch((error)=>{
+}catch(error){
+
 alert(error.message);
-});
+
+}
 
 });
 
-document.getElementById("login").addEventListener("click", ()=>{
+document.getElementById("login")
+.addEventListener("click", async()=>{
 
-const email = document.getElementById("email").value;
+const email =
+document.getElementById("email").value;
 
-const password = document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-signInWithEmailAndPassword(auth,email,password)
+try{
 
-.then(()=>{
+const userCredential =
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+localStorage.setItem(
+"uid",
+userCredential.user.uid
+);
+
 alert("Login Success");
-window.location.href="index.html";
-})
 
-.catch((error)=>{
+window.location.replace(
+"https://gameonline445.github.io/skyadda/"
+);
+
+}catch(error){
+
 alert(error.message);
-});
+
+}
 
 });
 
 </script>
 
 </body>
+
 </html>
