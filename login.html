@@ -1,95 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
-
-  <script type="module">
-
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-  }
-
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
-    authDomain: "skyadda-1d849.firebaseapp.com",
-    projectId: "skyadda-1d849",
-    storageBucket: "skyadda-1d849.firebasestorage.app",
-    messagingSenderId: "929894889505",
-    appId: "1:929894889505:web:6e76e0eb701ffe89d60b60",
-    measurementId: "G-GPT48HDF0K"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  window.signup = function () {
-
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    createUserWithEmailAndPassword(auth, email, password)
-
-    .then(() => {
-
-      alert("Account Created");
-
-    })
-
-    .catch((error) => {
-
-      alert(error.message);
-
-    });
-
-  }
-
-  window.login = function () {
-
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    signInWithEmailAndPassword(auth, email, password)
-
-    .then(() => {
-
-      alert("Login Success");
-
-      window.location.href = "index.html";
-
-    })
-
-    .catch((error) => {
-
-      alert(error.message);
-
-    });
-
-  }
-
-  </script>
+<title>Sky Adda Login</title>
 
 <style>
 
 body{
 background:black;
-color:white;
-font-family:sans-serif;
+font-family:Arial;
 text-align:center;
 padding-top:100px;
+}
+
+h1{
+color:white;
+margin-bottom:40px;
 }
 
 input{
 width:80%;
 padding:15px;
 margin:10px;
-border:none;
 border-radius:10px;
+border:none;
+font-size:18px;
 }
 
 button{
@@ -97,12 +31,13 @@ padding:15px 30px;
 margin:10px;
 border:none;
 border-radius:10px;
-background:cyan;
+background:#00e5ff;
 font-size:18px;
+color:black;
+font-weight:bold;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -111,15 +46,97 @@ font-size:18px;
 
 <input type="email" id="email" placeholder="Enter Email">
 
-<br>
-
 <input type="password" id="password" placeholder="Enter Password">
 
 <br>
 
-<button onclick="signup()">Signup</button>
+<button id="signup">Signup</button>
 
-<button onclick="login()">Login</button>
+<button id="login">Login</button>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
+authDomain: "skyadda-1d849.firebaseapp.com",
+
+projectId: "skyadda-1d849",
+
+storageBucket: "skyadda-1d849.firebasestorage.app",
+
+messagingSenderId: "929894889505",
+
+appId: "1:929894889505:web:6e76e0eb701ffe89d60b60",
+
+measurementId: "G-GPT48HDF0K"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const email = document.getElementById("email");
+
+const password = document.getElementById("password");
+
+document.getElementById("signup").addEventListener("click", () => {
+
+createUserWithEmailAndPassword(
+auth,
+email.value,
+password.value
+)
+
+.then(() => {
+
+alert("Signup Success");
+
+})
+
+.catch((error) => {
+
+alert(error.message);
+
+});
+
+});
+
+document.getElementById("login").addEventListener("click", () => {
+
+signInWithEmailAndPassword(
+auth,
+email.value,
+password.value
+)
+
+.then(() => {
+
+alert("Login Success");
+
+window.location.href = "index.html";
+
+})
+
+.catch((error) => {
+
+alert(error.message);
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
