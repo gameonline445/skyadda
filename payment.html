@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Add Money</title>
+<title>Manual Deposit</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -27,9 +27,15 @@ font-weight:bold;
 
 .box{
 background:#1e1e1e;
-margin:30px;
-padding:30px;
+margin:20px;
+padding:25px;
 border-radius:20px;
+}
+
+img{
+width:260px;
+border-radius:20px;
+margin-top:20px;
 }
 
 input{
@@ -53,6 +59,12 @@ font-weight:bold;
 margin-top:25px;
 }
 
+#status{
+margin-top:20px;
+font-size:22px;
+color:#00ff99;
+}
+
 </style>
 
 </head>
@@ -61,26 +73,43 @@ margin-top:25px;
 
 <div class="top">
 
-💳 ADD MONEY
+💳 MANUAL DEPOSIT
 
 </div>
 
 <div class="box">
 
-<h2>Enter Deposit Amount</h2>
+<h2>Scan & Pay</h2>
+
+<img src="https://i.imgur.com/5K6M6Qm.jpeg">
+
+<h3>
+
+UPI ID:
+
+<br><br>
+
+7878852370-1@okbizaxis
+
+</h3>
 
 <input
 type="number"
 id="amount"
 placeholder="Enter Amount">
 
-<br>
+<input
+type="text"
+id="utr"
+placeholder="Enter UTR Number">
 
-<button onclick="addMoney()">
+<button onclick="sendRequest()">
 
-ADD MONEY
+SEND REQUEST
 
 </button>
+
+<div id="status"></div>
 
 </div>
 
@@ -93,9 +122,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 
 getFirestore,
-doc,
-getDoc,
-updateDoc
+collection,
+addDoc
 
 }
 
@@ -121,46 +149,38 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-let uid = localStorage.getItem("uid");
+window.sendRequest = async function(){
 
-window.addMoney = async function(){
+let amount =
+document.getElementById("amount").value;
 
-let amount = Number(
-document.getElementById("amount").value
-);
+let utr =
+document.getElementById("utr").value;
 
-const ref = doc(db,"users",uid);
+let uid =
+localStorage.getItem("uid");
 
-const snap = await getDoc(ref);
+if(amount == "" || utr == ""){
 
-if(snap.exists()){
+alert("Fill All Fields");
 
-const data = snap.data();
+return;
 
-let currentMoney = data.money || 0;
+}
 
-let currentDeposit = data.deposit || 0;
+await addDoc(collection(db,"depositRequests"),{
 
-let history = data.history || "";
-
-await updateDoc(ref,{
-
-money: currentMoney + amount,
-
-deposit: currentDeposit + amount,
-
-history:
-history +
-"<br>💳 Deposit ₹" + amount
+uid:uid,
+amount:amount,
+utr:utr,
+status:"Pending"
 
 });
 
-alert("Money Added Successfully");
+document.getElementById("status")
+.innerHTML =
 
-window.location.href =
-"wallet.html";
-
-}
+"✅ Deposit Request Sent";
 
 }
 
