@@ -3,7 +3,7 @@
 
 <head>
 
-<title>SKY ADDA LOGIN</title>
+<title>SKY ADDA</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -11,35 +11,79 @@ content="width=device-width, initial-scale=1.0">
 <style>
 
 body{
-background:black;
+margin:0;
 font-family:Arial;
-text-align:center;
-padding-top:100px;
+background:#e8dfb9;
 }
 
-h1{
+.topbar{
+background:black;
 color:white;
-margin-bottom:40px;
-font-size:40px;
-}
-
-input{
-width:80%;
-padding:15px;
-margin:10px;
-border:none;
-border-radius:10px;
-font-size:20px;
-}
-
-button{
-padding:15px 30px;
-margin:10px;
-border:none;
-border-radius:10px;
-background:cyan;
-font-size:20px;
+padding:20px;
+text-align:center;
+font-size:35px;
 font-weight:bold;
+}
+
+.wallet{
+display:flex;
+justify-content:space-around;
+margin-top:30px;
+}
+
+.box{
+background:white;
+width:140px;
+height:140px;
+border-radius:20px;
+text-align:center;
+padding-top:20px;
+font-size:35px;
+font-weight:bold;
+}
+
+.box p{
+font-size:20px;
+}
+
+.mainbtn{
+margin-top:25px;
+padding:18px 40px;
+font-size:24px;
+background:#00c9ff;
+color:white;
+border:none;
+border-radius:15px;
+font-weight:bold;
+}
+
+.battle{
+background:white;
+margin:20px;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:black;
+display:flex;
+justify-content:space-around;
+padding:10px;
+color:white;
+}
+
+.item{
+text-align:center;
+font-size:18px;
+}
+
+a{
+text-decoration:none;
 }
 
 </style>
@@ -48,31 +92,102 @@ font-weight:bold;
 
 <body>
 
-<h1>SKY ADDA LOGIN</h1>
+<div class="topbar">
 
-<input
-type="email"
-id="email"
-placeholder="Enter Email">
+SKY ADDA
 
-<input
-type="password"
-id="password"
-placeholder="Enter Password">
+</div>
 
-<br>
+<div class="wallet">
 
-<button id="signup">
+<div class="box">
 
-Signup
+💰 ₹<span id="wallet">0</span>
+
+<p>Wallet</p>
+
+</div>
+
+<div class="box">
+
+🏆 ₹0
+
+<p>Winning</p>
+
+</div>
+
+</div>
+
+<center>
+
+<a href="payment.html">
+
+<button class="mainbtn">
+
+Add Money
 
 </button>
 
-<button id="login">
+</a>
 
-Login
+<br><br>
+
+<a href="withdraw.html">
+
+<button class="mainbtn">
+
+Withdraw
 
 </button>
+
+</a>
+
+</center>
+
+<div class="battle">
+
+<h2>🎮 Play Ludo</h2>
+
+<a href="ludo.html">
+
+<button class="mainbtn">
+
+PLAY NOW
+
+</button>
+
+</a>
+
+</div>
+
+<div class="bottom">
+
+<div class="item">
+🏠
+<p>Home</p>
+</div>
+
+<div class="item">
+💰
+<p>Wallet</p>
+</div>
+
+<div class="item">
+🎁
+<p>Refer</p>
+</div>
+
+<div class="item">
+☎️
+<p>Support</p>
+</div>
+
+<div class="item">
+👤
+<p>Profile</p>
+</div>
+
+</div>
 
 <script type="module">
 
@@ -82,19 +197,9 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-
 getFirestore,
 doc,
-setDoc
+getDoc
 
 }
 
@@ -102,7 +207,7 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+apiKey: "AIzaSyBNNnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
 
 authDomain: "skyadda-1d849.firebaseapp.com",
 
@@ -118,83 +223,26 @@ appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
 
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-
 const db = getFirestore(app);
 
-document.getElementById("signup")
-.addEventListener("click", async()=>{
+let uid = localStorage.getItem("uid");
 
-const email =
-document.getElementById("email").value;
+async function loadWallet(){
 
-const password =
-document.getElementById("password").value;
+const ref = doc(db,"users",uid);
 
-try{
+const snap = await getDoc(ref);
 
-const userCredential =
+if(snap.exists()){
 
-await createUserWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-const user = userCredential.user;
-
-await setDoc(doc(db,"users",user.uid),{
-
-money:0
-
-});
-
-alert("Signup Success");
-
-}catch(error){
-
-alert(error.message);
+document.getElementById("wallet")
+.innerHTML = snap.data().money || 0;
 
 }
 
-});
-
-document.getElementById("login")
-.addEventListener("click", async()=>{
-
-const email =
-document.getElementById("email").value;
-
-const password =
-document.getElementById("password").value;
-
-try{
-
-const userCredential =
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-localStorage.setItem(
-"uid",
-userCredential.user.uid
-);
-
-alert("Login Success");
-
-window.location.href =
-"index.html";
-
-}catch(error){
-
-alert(error.message);
-
 }
 
-});
+loadWallet();
 
 </script>
 
