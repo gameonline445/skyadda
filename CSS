@@ -1,0 +1,191 @@
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+
+}
+
+body{
+
+background:#efe7c5;
+padding-bottom:100px;
+
+}
+
+/* TOPBAR */
+
+.topbar{
+
+background:linear-gradient(to right,#000,#222);
+padding:25px;
+border-bottom:3px solid yellow;
+text-align:center;
+position:relative;
+color:white;
+
+}
+
+.topbar h1{
+
+font-size:35px;
+
+}
+
+.menu-icon{
+
+font-size:30px;
+position:absolute;
+left:20px;
+top:25px;
+color:white;
+
+}
+
+/* WALLET */
+
+.wallet{
+
+display:flex;
+justify-content:space-around;
+margin-top:40px;
+
+}
+
+.box{
+
+background:white;
+color:black;
+width:140px;
+padding:20px;
+border-radius:20px;
+font-size:30px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+font-weight:bold;
+text-align:center;
+
+}
+
+.box p{
+
+font-size:16px;
+margin-top:10px;
+
+}
+
+/* BATTLE */
+
+.battle{
+
+background:white;
+color:black;
+margin:30px;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+
+}
+
+.battle h2{
+
+margin-bottom:20px;
+
+}
+
+input{
+
+padding:15px;
+width:70%;
+font-size:18px;
+margin-top:20px;
+border-radius:12px;
+border:2px solid #00b894;
+outline:none;
+
+}
+
+button{
+
+padding:15px 25px;
+background:linear-gradient(to right,#00b894,#00cec9);
+color:white;
+border:none;
+font-size:18px;
+border-radius:12px;
+margin-top:20px;
+font-weight:bold;
+
+}
+
+/* NOTICE */
+
+.notice{
+
+background:linear-gradient(to right,#000,#00b894);
+padding:20px;
+margin:20px;
+border-radius:15px;
+font-size:20px;
+color:white;
+
+}
+
+/* RUNNING */
+
+.running{
+
+background:white;
+color:black;
+margin:20px;
+padding:20px;
+border-radius:15px;
+
+}
+
+.running h2{
+
+margin-bottom:20px;
+
+}
+
+.run-card{
+
+display:flex;
+justify-content:space-between;
+background:#f1f1f1;
+padding:15px;
+margin-top:10px;
+border-radius:10px;
+font-size:20px;
+
+}
+
+/* BOTTOM MENU */
+
+.bottom-menu{
+
+position:fixed;
+bottom:0;
+width:100%;
+background:black;
+display:flex;
+justify-content:space-around;
+padding:15px 0;
+color:white;
+
+}
+
+.item{
+
+text-align:center;
+font-size:22px;
+
+}
+
+.item p{
+
+font-size:12px;
+margin-top:5px;
+
+}
