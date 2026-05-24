@@ -1,65 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+  <title>Login</title>
 
-<meta charset="UTF-8">
+  <script type="module">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-<title>Login</title>
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+  }
+
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+    authDomain: "skyadda-1d849.firebaseapp.com",
+    projectId: "skyadda-1d849",
+    storageBucket: "skyadda-1d849.firebasestorage.app",
+    messagingSenderId: "929894889505",
+    appId: "1:929894889505:web:6e76e0eb701ffe89d60b60",
+    measurementId: "G-GPT48HDF0K"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.signup = function () {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+
+    .then(() => {
+
+      alert("Account Created");
+
+    })
+
+    .catch((error) => {
+
+      alert(error.message);
+
+    });
+
+  }
+
+  window.login = function () {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+
+    .then(() => {
+
+      alert("Login Success");
+
+      window.location.href = "index.html";
+
+    })
+
+    .catch((error) => {
+
+      alert(error.message);
+
+    });
+
+  }
+
+  </script>
 
 <style>
 
 body{
-
 background:black;
+color:white;
 font-family:sans-serif;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-
-}
-
-.login-box{
-
-background:white;
-padding:30px;
-border-radius:20px;
-width:300px;
 text-align:center;
-
-}
-
-h1{
-
-margin-bottom:20px;
-
+padding-top:100px;
 }
 
 input{
-
-width:100%;
+width:80%;
 padding:15px;
-margin-top:15px;
+margin:10px;
+border:none;
 border-radius:10px;
-border:1px solid gray;
-font-size:16px;
-
 }
 
 button{
-
-width:100%;
-padding:15px;
-margin-top:20px;
-background:#00b894;
-color:white;
+padding:15px 30px;
+margin:10px;
 border:none;
 border-radius:10px;
+background:cyan;
 font-size:18px;
-
 }
 
 </style>
@@ -68,18 +107,19 @@ font-size:18px;
 
 <body>
 
-<div class="login-box">
+<h1>SKY ADDA LOGIN</h1>
 
-<h1>SKY ADDA</h1>
+<input type="email" id="email" placeholder="Enter Email">
 
-<input type="email" placeholder="Enter Email">
+<br>
 
-<input type="password" placeholder="Enter Password">
+<input type="password" id="password" placeholder="Enter Password">
 
-<button>Login</button>
+<br>
 
-</div>
+<button onclick="signup()">Signup</button>
+
+<button onclick="login()">Login</button>
 
 </body>
-
 </html>
