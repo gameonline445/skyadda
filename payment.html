@@ -3,7 +3,7 @@
 
 <head>
 
-<title>UPI PAYMENT</title>
+<title>Add Money</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -13,26 +13,22 @@ content="width=device-width, initial-scale=1.0">
 body{
 margin:0;
 font-family:Arial;
-background:black;
-text-align:center;
+background:#111;
 color:white;
+text-align:center;
 }
 
-h1{
-margin-top:30px;
-font-size:40px;
-}
-
-img{
-width:280px;
-margin-top:30px;
-border-radius:20px;
+.top{
+background:black;
+padding:20px;
+font-size:35px;
+font-weight:bold;
 }
 
 .box{
 background:#1e1e1e;
 margin:30px;
-padding:25px;
+padding:30px;
 border-radius:20px;
 }
 
@@ -40,20 +36,21 @@ input{
 width:90%;
 padding:18px;
 font-size:22px;
-margin-top:20px;
 border:none;
-border-radius:12px;
+border-radius:15px;
+margin-top:20px;
 }
 
 button{
-padding:18px 35px;
+width:90%;
+padding:18px;
 font-size:24px;
-margin-top:25px;
 border:none;
-border-radius:12px;
+border-radius:15px;
 background:#00cfff;
 color:white;
 font-weight:bold;
+margin-top:25px;
 }
 
 </style>
@@ -62,31 +59,112 @@ font-weight:bold;
 
 <body>
 
-<h1>💰 Add Money</h1>
+<div class="top">
 
-<img src="https://i.imgur.com/2s9XQZf.png">
+💳 ADD MONEY
+
+</div>
 
 <div class="box">
 
-<h2>UPI ID</h2>
-
-<p style="font-size:25px;">
-
-yourupi@paytm
-
-</p>
+<h2>Enter Deposit Amount</h2>
 
 <input
 type="number"
+id="amount"
 placeholder="Enter Amount">
 
-<button>
+<br>
 
-PAYMENT DONE
+<button onclick="addMoney()">
+
+ADD MONEY
 
 </button>
 
 </div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+doc,
+getDoc,
+updateDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+
+authDomain: "skyadda-1d849.firebaseapp.com",
+
+projectId: "skyadda-1d849",
+
+storageBucket: "skyadda-1d849.firebasestorage.app",
+
+messagingSenderId: "929894889505",
+
+appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+let uid = localStorage.getItem("uid");
+
+window.addMoney = async function(){
+
+let amount = Number(
+document.getElementById("amount").value
+);
+
+const ref = doc(db,"users",uid);
+
+const snap = await getDoc(ref);
+
+if(snap.exists()){
+
+const data = snap.data();
+
+let currentMoney = data.money || 0;
+
+let currentDeposit = data.deposit || 0;
+
+let history = data.history || "";
+
+await updateDoc(ref,{
+
+money: currentMoney + amount,
+
+deposit: currentDeposit + amount,
+
+history:
+history +
+"<br>💳 Deposit ₹" + amount
+
+});
+
+alert("Money Added Successfully");
+
+window.location.href =
+"wallet.html";
+
+}
+
+}
+
+</script>
 
 </body>
 
