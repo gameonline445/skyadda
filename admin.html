@@ -59,7 +59,7 @@ margin-top:15px;
 
 <div id="requests">
 
-Loading Requests...
+Loading...
 
 </div>
 
@@ -114,9 +114,9 @@ collection(db,"depositRequests")
 
 requestBox.innerHTML = "";
 
-querySnapshot.forEach((docSnap)=>{
+querySnapshot.forEach((item)=>{
 
-const data = docSnap.data();
+const data = item.data();
 
 requestBox.innerHTML += `
 
@@ -143,10 +143,8 @@ ${data.status}
 
 <br>
 
-<button onclick="approveMoney(
-'${data.uid}',
-${data.amount}
-)">
+<button
+onclick="approveMoney('${data.uid}',${data.amount})">
 
 ADD MONEY
 
@@ -185,7 +183,7 @@ currentMoney + Number(amount)
 
 });
 
-alert("Money Added");
+alert("✅ Money Added");
 
 location.reload();
 
