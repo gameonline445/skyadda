@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>ADMIN PANEL</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+}
+
+h1{
+background:black;
+padding:20px;
+margin:0;
+font-size:35px;
+}
+
+.box{
+background:#222;
+margin:20px;
+padding:25px;
+border-radius:20px;
+}
+
+input{
+width:90%;
+padding:18px;
+font-size:20px;
+margin-top:15px;
+border:none;
+border-radius:10px;
+}
+
+button{
+padding:18px 35px;
+font-size:22px;
+margin-top:20px;
+border:none;
+border-radius:12px;
+background:#00c9ff;
+color:white;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>👨‍💼 ADMIN PANEL</h1>
+
+<div class="box">
+
+<h2>Add Wallet Balance</h2>
+
+<input type="text"
+id="userid"
+placeholder="Enter User UID">
+
+<input type="number"
+id="money"
+placeholder="Enter Amount">
+
+<button onclick="addMoney()">
+
+ADD MONEY
+
+</button>
+
+</div>
+
+<script>
+
+function addMoney(){
+
+let uid =
+document.getElementById("userid").value;
+
+let money =
+document.getElementById("money").value;
+
+alert("Demo Admin Panel Ready");
+
+}
+
+</script>
+
+</body>
+
+</html>
