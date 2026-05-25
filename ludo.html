@@ -12,15 +12,35 @@ content="width=device-width, initial-scale=1.0">
 
 body{
 margin:0;
-background:black;
 font-family:Arial;
-overflow:hidden;
+background:#111;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+flex-direction:column;
+text-align:center;
 }
 
-iframe{
-width:100%;
-height:100vh;
+h1{
+font-size:50px;
+}
+
+p{
+font-size:25px;
+margin-top:20px;
+}
+
+.btn{
+margin-top:40px;
+padding:25px 60px;
+font-size:30px;
+font-weight:bold;
 border:none;
+border-radius:20px;
+background:#8a2cff;
+color:white;
 }
 
 </style>
@@ -29,10 +49,25 @@ border:none;
 
 <body>
 
-<iframe
-src="https://games.crazygames.com/en_US/ludo-king/index.html?v=1.321">
+<h1>
 
-</iframe>
+🎮 LUDO KING
+
+</h1>
+
+<p>
+
+Click below to start playing
+
+</p>
+
+<button class="btn"
+
+onclick="window.open('https://www.crazygames.com/game/ludo-king','_blank')">
+
+PLAY NOW
+
+</button>
 
 </body>
 
