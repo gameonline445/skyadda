@@ -13,7 +13,7 @@ content="width=device-width, initial-scale=1.0">
 body{
 margin:0;
 font-family:Arial;
-background:#111;
+background:#000;
 color:white;
 text-align:center;
 }
@@ -26,12 +26,12 @@ font-weight:bold;
 }
 
 .box{
-background:#1e1e1e;
+background:#1c1c1c;
 margin:20px;
 padding:25px;
 border-radius:20px;
 font-size:24px;
-line-height:50px;
+line-height:60px;
 }
 
 .btn{
@@ -49,11 +49,10 @@ text-decoration:none;
 }
 
 .history{
-background:#1e1e1e;
+background:#1c1c1c;
 margin:20px;
 padding:20px;
 border-radius:20px;
-font-size:20px;
 text-align:left;
 }
 
@@ -62,6 +61,7 @@ background:#2b2b2b;
 padding:15px;
 margin-top:10px;
 border-radius:12px;
+font-size:22px;
 }
 
 </style>
@@ -93,11 +93,15 @@ border-radius:12px;
 <h2>🧾 Transaction History</h2>
 
 <div class="item">
+
 💵 Deposit ₹1000
+
 </div>
 
 <div class="item">
+
 🏆 Winning ₹0
+
 </div>
 
 </div>
@@ -154,10 +158,10 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
-let uid =
-"AEp1CmD980TmxnrdCiCUVFC7WMB2";
-
 async function loadWallet(){
+
+const uid =
+"AEp1CmD980TmxnrdCiCUVFC7WMB2";
 
 const ref =
 doc(db,"users",uid);
@@ -172,11 +176,11 @@ snap.data();
 
 document.getElementById("wallet")
 .innerHTML =
-data.money || 0;
+data.money;
 
 document.getElementById("winning")
 .innerHTML =
-data.winning || 0;
+data.winning;
 
 }
 
