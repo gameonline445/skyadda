@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
-<meta charset="UTF-8">
+<title>Real Custom Ludo</title>
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
-
-<title>Custom Ludo</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Arial;
 background:#111;
-color:white;
+font-family:Arial;
 text-align:center;
+color:white;
 }
 
 h1{
@@ -25,55 +24,77 @@ font-size:40px;
 }
 
 .board{
+width:360px;
+height:360px;
+margin:30px auto;
 display:grid;
-grid-template-columns:repeat(5,70px);
-gap:8px;
-justify-content:center;
-margin-top:30px;
+grid-template-columns:repeat(6,1fr);
+grid-template-rows:repeat(6,1fr);
+gap:2px;
+background:white;
+padding:5px;
+border-radius:20px;
 }
 
 .cell{
-width:70px;
-height:70px;
-background:white;
-border-radius:10px;
+background:#eee;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:30px;
-color:black;
+font-size:25px;
 font-weight:bold;
+border-radius:8px;
 }
 
-.player{
+.red{
 background:red;
 color:white;
 }
 
-.finish{
+.green{
 background:green;
 color:white;
 }
 
+.blue{
+background:blue;
+color:white;
+}
+
+.yellow{
+background:gold;
+color:black;
+}
+
+.path{
+background:#ddd;
+}
+
+.center{
+background:black;
+color:white;
+font-size:35px;
+}
+
 #dice{
-font-size:60px;
-margin-top:30px;
+font-size:70px;
+margin-top:20px;
 }
 
 button{
-margin-top:30px;
+margin-top:20px;
 padding:18px 40px;
 font-size:25px;
 font-weight:bold;
 border:none;
-border-radius:18px;
+border-radius:20px;
 background:#8a2cff;
 color:white;
 }
 
 #winner{
 font-size:35px;
-margin-top:30px;
+margin-top:25px;
 color:#00ff90;
 }
 
@@ -85,46 +106,53 @@ color:#00ff90;
 
 <h1>
 
-🎮 CUSTOM LUDO
+🎮 REAL LUDO
 
 </h1>
 
 <div class="board">
 
-<div class="cell player" id="c1">🚗</div>
-<div class="cell" id="c2"></div>
-<div class="cell" id="c3"></div>
-<div class="cell" id="c4"></div>
-<div class="cell" id="c5"></div>
+<div class="cell red">🔴</div>
+<div class="cell red">🔴</div>
+<div class="cell path" id="p1"></div>
+<div class="cell path" id="p2"></div>
+<div class="cell green">🟢</div>
+<div class="cell green">🟢</div>
 
-<div class="cell" id="c6"></div>
-<div class="cell" id="c7"></div>
-<div class="cell" id="c8"></div>
-<div class="cell" id="c9"></div>
-<div class="cell" id="c10"></div>
+<div class="cell red">🔴</div>
+<div class="cell red">🚗</div>
+<div class="cell path" id="p3"></div>
+<div class="cell path" id="p4"></div>
+<div class="cell green">🟢</div>
+<div class="cell green">🟢</div>
 
-<div class="cell" id="c11"></div>
-<div class="cell" id="c12"></div>
-<div class="cell" id="c13"></div>
-<div class="cell" id="c14"></div>
-<div class="cell" id="c15"></div>
+<div class="cell path" id="p5"></div>
+<div class="cell path" id="p6"></div>
+<div class="cell center">🎲</div>
+<div class="cell path" id="p7"></div>
+<div class="cell path" id="p8"></div>
+<div class="cell path" id="p9"></div>
 
-<div class="cell" id="c16"></div>
-<div class="cell" id="c17"></div>
-<div class="cell" id="c18"></div>
-<div class="cell" id="c19"></div>
-<div class="cell" id="c20"></div>
+<div class="cell path" id="p10"></div>
+<div class="cell path" id="p11"></div>
+<div class="cell path" id="p12"></div>
+<div class="cell path" id="p13"></div>
+<div class="cell path" id="p14"></div>
+<div class="cell path" id="p15"></div>
 
-<div class="cell" id="c21"></div>
-<div class="cell" id="c22"></div>
-<div class="cell" id="c23"></div>
-<div class="cell" id="c24"></div>
+<div class="cell blue">🔵</div>
+<div class="cell blue">🔵</div>
+<div class="cell path" id="p16"></div>
+<div class="cell path" id="p17"></div>
+<div class="cell yellow">🟡</div>
+<div class="cell yellow">🟡</div>
 
-<div class="cell finish" id="c25">
-
-🏆
-
-</div>
+<div class="cell blue">🔵</div>
+<div class="cell blue">🔵</div>
+<div class="cell path" id="p18"></div>
+<div class="cell path" id="p19"></div>
+<div class="cell yellow">🟡</div>
+<div class="cell yellow">🏆</div>
 
 </div>
 
@@ -136,7 +164,7 @@ color:#00ff90;
 
 <button onclick="rollDice()">
 
-🎲 ROLL DICE
+ROLL DICE
 
 </button>
 
@@ -157,19 +185,21 @@ document.getElementById(
 "dice"
 ).innerHTML = dice;
 
-document.getElementById(
-"c"+position
-).innerHTML = "";
+if(document.getElementById(
+"p"+position
+)){
 
 document.getElementById(
-"c"+position
-).classList.remove("player");
+"p"+position
+).innerHTML = "";
+
+}
 
 position += dice;
 
-if(position >= 25){
+if(position >= 19){
 
-position = 25;
+position = 19;
 
 document.getElementById(
 "winner"
@@ -178,15 +208,21 @@ document.getElementById(
 
 }
 
+if(document.getElementById(
+"p"+position
+)){
+
 document.getElementById(
-"c"+position
+"p"+position
 ).innerHTML = "🚗";
 
-document.getElementById(
-"c"+position
-).classList.add("player");
+}
 
 }
+
+document.getElementById(
+"p1"
+).innerHTML = "🚗";
 
 </script>
 
