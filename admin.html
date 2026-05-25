@@ -57,6 +57,10 @@ background:green;
 background:red;
 }
 
+.pending{
+background:orange;
+}
+
 </style>
 
 </head>
@@ -84,7 +88,15 @@ background:red;
 
 </div>
 
-<div id="requestBox">
+<div id="pendingBox">
+
+</div>
+
+<div id="approvedBox">
+
+</div>
+
+<div id="failedBox">
 
 </div>
 
@@ -128,8 +140,14 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const requestBox =
-document.getElementById("requestBox");
+const pendingBox =
+document.getElementById("pendingBox");
+
+const approvedBox =
+document.getElementById("approvedBox");
+
+const failedBox =
+document.getElementById("failedBox");
 
 let total = 0;
 
@@ -140,7 +158,14 @@ await getDocs(
 collection(db,"depositRequests")
 );
 
-requestBox.innerHTML = "";
+pendingBox.innerHTML =
+"<h1>🟡 Pending Requests</h1>";
+
+approvedBox.innerHTML =
+"<h1>🟢 Approved Requests</h1>";
+
+failedBox.innerHTML =
+"<h1>🔴 Failed Requests</h1>";
 
 querySnapshot.forEach((item)=>{
 
@@ -148,7 +173,7 @@ const data = item.data();
 
 total += Number(data.amount || 0);
 
-requestBox.innerHTML += `
+const card = `
 
 <div class="card">
 
@@ -198,6 +223,24 @@ FAILED
 </div>
 
 `;
+
+if(data.status == "Approved"){
+
+approvedBox.innerHTML += card;
+
+}
+
+else if(data.status == "Failed"){
+
+failedBox.innerHTML += card;
+
+}
+
+else{
+
+pendingBox.innerHTML += card;
+
+}
 
 });
 
