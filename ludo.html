@@ -6,14 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>REAL LUDO KING UPGRADE</title>
+<title>ULTIMATE REAL CUSTOM LUDO</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#111;
+background:#0f0f0f;
 font-family:Arial;
 color:white;
 text-align:center;
@@ -26,7 +26,7 @@ font-size:38px;
 }
 
 .turnBox{
-font-size:25px;
+font-size:26px;
 margin-top:10px;
 }
 
@@ -50,13 +50,13 @@ grid-template-rows:repeat(15,1fr);
 
 background:white;
 
-border-radius:20px;
+border-radius:22px;
 
 overflow:hidden;
 
 border:5px solid #222;
 
-box-shadow:0 0 25px rgba(0,0,0,0.8);
+box-shadow:0 0 30px rgba(0,0,0,0.8);
 
 }
 
@@ -77,15 +77,15 @@ box-sizing:border-box;
 }
 
 .red-home{
-background:#ff4d4d;
+background:#ff4040;
 }
 
 .green-home{
-background:#33cc66;
+background:#22cc55;
 }
 
 .blue-home{
-background:#3366ff;
+background:#2d6cff;
 }
 
 .yellow-home{
@@ -97,13 +97,13 @@ background:white;
 }
 
 .safe{
-background:#ddd;
+background:#e7e7e7;
 }
 
 .center{
 background:black;
 color:white;
-font-size:24px;
+font-size:22px;
 }
 
 .token{
@@ -119,11 +119,13 @@ position:absolute;
 
 cursor:pointer;
 
-transition:0.3s;
+transition:0.25s;
 
-box-shadow:0 0 10px rgba(0,0,0,0.5);
+box-shadow:0 0 12px rgba(0,0,0,0.6);
 
 animation:pop 0.3s;
+
+z-index:2;
 
 }
 
@@ -158,7 +160,6 @@ background:gold;
 .active{
 
 animation:glow 1s infinite;
-z-index:5;
 
 }
 
@@ -184,18 +185,35 @@ font-size:95px;
 
 margin-top:10px;
 
-animation:diceAnim 0.5s;
+transition:0.3s;
 
 }
 
-@keyframes diceAnim{
+.rollAnim{
+
+animation:shake 0.5s;
+}
+
+@keyframes shake{
 
 0%{
-transform:rotate(0deg) scale(0.5);
+transform:rotate(0deg);
+}
+
+25%{
+transform:rotate(20deg);
+}
+
+50%{
+transform:rotate(-20deg);
+}
+
+75%{
+transform:rotate(10deg);
 }
 
 100%{
-transform:rotate(360deg) scale(1);
+transform:rotate(0deg);
 }
 
 }
@@ -215,16 +233,14 @@ border-radius:25px;
 background:linear-gradient(
 45deg,
 #8a2cff,
-#c84dff
+#d85cff
 );
 
 color:white;
 
 margin-top:20px;
 
-box-shadow:0 0 20px purple;
-
-transition:0.3s;
+box-shadow:0 0 25px purple;
 
 }
 
@@ -269,7 +285,7 @@ text-shadow:0 0 5px #00ff90;
 <body>
 
 <h1>
-🎮 REAL LUDO KING
+🎮 ULTIMATE LUDO KING
 </h1>
 
 <div class="turnBox">
@@ -282,7 +298,7 @@ RED
 </div>
 
 <div class="info">
-⭐ Ultimate Upgrade Version
+🔥 BIGGEST CUSTOM VERSION
 </div>
 
 <div class="board"
@@ -551,12 +567,25 @@ const faces = [
 "⚀","⚁","⚂","⚃","⚄","⚅"
 ];
 
+const dice =
+document.getElementById("dice");
+
+dice.classList.add(
+"rollAnim"
+);
+
+setTimeout(()=>{
+
+dice.classList.remove(
+"rollAnim"
+);
+
+},500);
+
 currentDice =
 Math.floor(Math.random()*6)+1;
 
-document.getElementById(
-"dice"
-).innerHTML =
+dice.innerHTML =
 faces[currentDice-1];
 
 }
@@ -588,6 +617,8 @@ if(currentDice==6){
 
 token.pos=0;
 
+drawTokens();
+
 }
 
 else{
@@ -600,14 +631,16 @@ return;
 
 else{
 
-let move =
+let steps = currentDice;
+
+let moveInterval =
 setInterval(()=>{
 
-if(currentDice>0){
+if(steps>0){
 
 token.pos++;
 
-currentDice--;
+steps--;
 
 drawTokens();
 
@@ -615,13 +648,39 @@ drawTokens();
 
 else{
 
-clearInterval(move);
+clearInterval(
+moveInterval
+);
+
+finishMove(
+player,
+index
+);
 
 }
 
-},200);
+},180);
 
 }
+
+if(currentDice!=6){
+
+setTimeout(()=>{
+
+nextTurn();
+
+},1200);
+
+}
+
+currentDice=0;
+
+}
+
+function finishMove(player,index){
+
+let token =
+players[player][index];
 
 if(token.pos>=path.length-1){
 
@@ -640,12 +699,6 @@ confetti();
 killCheck(player,index);
 
 drawTokens();
-
-if(currentDice!=6){
-
-nextTurn();
-
-}
 
 }
 
@@ -685,7 +738,7 @@ t.pos=-1;
 
 function confetti(){
 
-for(let i=0;i<40;i++){
+for(let i=0;i<50;i++){
 
 const div =
 document.createElement("div");
