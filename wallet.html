@@ -1,3 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Final Wallet</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+padding:20px;
+}
+
+.top{
+font-size:45px;
+font-weight:bold;
+padding:20px 0;
+}
+
+.box{
+background:#161622;
+padding:25px;
+border-radius:25px;
+margin-top:25px;
+}
+
+.balance{
+font-size:28px;
+font-weight:bold;
+margin-top:30px;
+}
+
+.btn{
+width:100%;
+padding:20px;
+font-size:28px;
+font-weight:bold;
+border:none;
+border-radius:20px;
+margin-top:25px;
+background:#12c8ff;
+color:white;
+}
+
+.history{
+background:#222;
+padding:18px;
+border-radius:18px;
+margin-top:18px;
+}
+
+.time{
+color:#aaa;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+💰 MY WALLET
+
+</div>
+
+<div class="box">
+
+<div class="balance">
+
+💰 Wallet Balance :
+₹<span id="walletBalance">
+
+0
+
+</span>
+
+</div>
+
+<div class="balance">
+
+🏆 Winning Balance :
+₹<span id="winningBalance">
+
+0
+
+</span>
+
+</div>
+
+</div>
+
 <div class="box">
 
 <h1>
@@ -14,6 +115,20 @@ Loading...
 
 </div>
 
+<button class="btn"
+onclick="location.href='addmoney.html'">
+
+ADD MONEY
+
+</button>
+
+<button class="btn"
+onclick="location.href='withdraw.html'">
+
+WITHDRAW
+
+</button>
+
 <script type="module">
 
 import { initializeApp }
@@ -23,6 +138,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 
 getFirestore,
+doc,
+getDoc,
 collection,
 getDocs
 
@@ -53,6 +170,41 @@ const db = getFirestore(app);
 const uid =
 localStorage.getItem("uid");
 
+async function loadWallet(){
+
+if(!uid){
+
+return;
+
+}
+
+const userRef =
+doc(db,"users",uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
+
+const data =
+userSnap.data();
+
+document.getElementById(
+"walletBalance"
+).innerHTML =
+data.money || 0;
+
+document.getElementById(
+"winningBalance"
+).innerHTML =
+data.winning || 0;
+
+}
+
+}
+
+loadWallet();
+
 async function loadHistory(){
 
 const querySnapshot =
@@ -75,12 +227,7 @@ if(data.uid == uid){
 
 historyBox.innerHTML += `
 
-<div style="
-background:#222;
-padding:15px;
-margin-top:15px;
-border-radius:15px;
-">
+<div class="history">
 
 <h3>
 
@@ -102,9 +249,9 @@ ${data.status}
 
 </p>
 
-<p>
+<p class="time">
 
-📅 ${data.time}
+📅 ${data.time || "Old Transaction"}
 
 </p>
 
@@ -121,3 +268,7 @@ ${data.status}
 loadHistory();
 
 </script>
+
+</body>
+
+</html>
