@@ -5,14 +5,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ULTRA ONLINE LUDO KING</title>
+<title>LEGEND ONLINE LUDO KING</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#050505;
+background:#040404;
 font-family:Arial;
 color:white;
 text-align:center;
@@ -24,20 +24,84 @@ font-size:34px;
 margin-top:15px;
 }
 
+.wallet{
+font-size:24px;
+margin-top:8px;
+color:#00ff99;
+}
+
+.profile{
+
+display:flex;
+justify-content:center;
+gap:12px;
+margin-top:10px;
+
+}
+
+.profile div{
+
+background:#111;
+padding:8px 15px;
+border-radius:15px;
+font-size:16px;
+box-shadow:0 0 10px rgba(255,255,255,0.1);
+
+}
+
 .turnBox{
 font-size:24px;
 margin-top:10px;
 }
 
-.info{
+.status{
 font-size:18px;
-margin-top:10px;
+margin-top:8px;
+color:#ffd633;
 }
 
-.wallet{
-font-size:22px;
-margin-top:8px;
-color:#00ff99;
+.roomButtons{
+
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:15px;
+flex-wrap:wrap;
+
+}
+
+button{
+
+padding:14px 28px;
+
+font-size:18px;
+
+font-weight:bold;
+
+border:none;
+
+border-radius:18px;
+
+background:linear-gradient(
+45deg,
+#8a2cff,
+#e05fff
+);
+
+color:white;
+
+box-shadow:0 0 20px purple;
+
+}
+
+input{
+
+padding:12px;
+border:none;
+border-radius:12px;
+font-size:16px;
+width:180px;
+
 }
 
 .board{
@@ -170,13 +234,14 @@ box-shadow:0 0 5px white;
 #dice{
 
 font-size:95px;
-
 margin-top:10px;
 
 }
 
 .rollAnim{
+
 animation:shake 0.5s;
+
 }
 
 @keyframes shake{
@@ -186,62 +251,6 @@ animation:shake 0.5s;
 50%{transform:rotate(-20deg);}
 75%{transform:rotate(10deg);}
 100%{transform:rotate(0deg);}
-
-}
-
-button{
-
-padding:16px 45px;
-
-font-size:24px;
-
-font-weight:bold;
-
-border:none;
-
-border-radius:22px;
-
-background:linear-gradient(
-45deg,
-#8a2cff,
-#e05fff
-);
-
-color:white;
-
-margin-top:20px;
-
-box-shadow:0 0 25px purple;
-
-}
-
-#winner{
-
-font-size:40px;
-
-margin-top:15px;
-
-color:#00ff90;
-
-}
-
-.roomBox{
-
-margin-top:10px;
-
-}
-
-input{
-
-padding:10px;
-
-border:none;
-
-border-radius:10px;
-
-font-size:18px;
-
-width:180px;
 
 }
 
@@ -282,11 +291,27 @@ color:#00ff90;
 <body>
 
 <h1>
-🎮 ULTRA ONLINE LUDO
+🎮 LEGEND ONLINE LUDO
 </h1>
 
 <div class="wallet">
-💰 Wallet : ₹100
+💰 Wallet : ₹500
+</div>
+
+<div class="profile">
+
+<div>
+👤 Player : Neeraj
+</div>
+
+<div>
+🏆 Wins : 12
+</div>
+
+<div>
+🔥 Rank : PRO
+</div>
+
 </div>
 
 <div class="turnBox">
@@ -298,18 +323,26 @@ RED
 
 </div>
 
-<div class="info">
-🔥 ULTRA ONLINE VERSION
+<div class="status">
+⚡ Match Entry : ₹20 | Winner Gets ₹60
 </div>
 
-<div class="roomBox">
+<div class="roomButtons">
 
 <input
 id="roomInput"
-placeholder="Enter Room Code">
+placeholder="Room Code">
 
 <button onclick="joinRoom()">
 JOIN ROOM
+</button>
+
+<button onclick="createRoom()">
+CREATE ROOM
+</button>
+
+<button onclick="randomMatch()">
+RANDOM MATCH
 </button>
 
 </div>
@@ -326,8 +359,6 @@ id="board">
 <button onclick="rollDice()">
 🎲 ROLL DICE
 </button>
-
-<div id="winner"></div>
 
 <div class="overlay"
 id="winScreen">
@@ -366,6 +397,35 @@ return;
 alert(
 "ROOM JOINED : "+room
 );
+
+}
+
+function createRoom(){
+
+let code =
+Math.floor(
+1000 + Math.random()*9000
+);
+
+alert(
+"ROOM CREATED : "+code
+);
+
+}
+
+function randomMatch(){
+
+alert(
+"SEARCHING PLAYERS..."
+);
+
+setTimeout(()=>{
+
+alert(
+"MATCH FOUND ✅"
+);
+
+},2000);
 
 }
 
@@ -525,31 +585,22 @@ players[player].forEach(
 const t =
 document.createElement("div");
 
-t.classList.add(
-"token"
-);
+t.classList.add("token");
 
-t.classList.add(
-token.class
-);
+t.classList.add(token.class);
 
 if(
 player==
 turns[currentTurn]
 ){
 
-t.classList.add(
-"active"
-);
+t.classList.add("active");
 
 }
 
 t.onclick=()=>{
 
-moveToken(
-player,
-index
-);
+moveToken(player,index);
 
 };
 
@@ -625,9 +676,7 @@ const faces = [
 const dice =
 document.getElementById("dice");
 
-dice.classList.add(
-"rollAnim"
-);
+dice.classList.add("rollAnim");
 
 setTimeout(()=>{
 
@@ -722,7 +771,7 @@ index
 
 }
 
-},140);
+},120);
 
 }
 
@@ -830,11 +879,6 @@ moveToken(ai,choice);
 function showWinner(player){
 
 document.getElementById(
-"winner"
-).innerHTML =
-"🏆 "+player+" WINS 🎉";
-
-document.getElementById(
 "winText"
 ).innerHTML =
 "🏆 "+player+" WINS";
@@ -850,7 +894,7 @@ confetti();
 
 function confetti(){
 
-for(let i=0;i<100;i++){
+for(let i=0;i<120;i++){
 
 const div =
 document.createElement("div");
