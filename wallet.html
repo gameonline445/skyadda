@@ -1,115 +1,108 @@
-<!DOCTYPE html>
-<html>
+<div class="box">
 
-<head>
+<h1>🧾 Transaction History</h1>
 
-<title>Wallet</title>
+<div id="historyBox">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+Loading...
 
-<style>
+</div>
 
-body{
-background:#000;
-font-family:Arial;
-color:white;
-padding:20px;
+</div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs
+
 }
 
-.box{
-background:#16161d;
-padding:20px;
-border-radius:20px;
-margin-top:20px;
-}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-button{
-width:100%;
-padding:18px;
-border:none;
+const firebaseConfig = {
+
+apiKey: "YOUR_API_KEY",
+
+authDomain: "skyadda-1d849.firebaseapp.com",
+
+projectId: "skyadda-1d849",
+
+storageBucket: "skyadda-1d849.appspot.com",
+
+messagingSenderId: "YOUR_SENDER_ID",
+
+appId: "YOUR_APP_ID"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const historyBox =
+document.getElementById("historyBox");
+
+async function loadHistory(){
+
+const querySnapshot =
+await getDocs(
+collection(db,"transactions")
+);
+
+historyBox.innerHTML = "";
+
+querySnapshot.forEach((item)=>{
+
+const data = item.data();
+
+historyBox.innerHTML += `
+
+<div style="
+background:#222;
+padding:15px;
+margin-top:15px;
 border-radius:15px;
-background:#12c8f5;
-color:white;
-font-size:24px;
-font-weight:bold;
-margin-top:20px;
-}
-
-a{
-text-decoration:none;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<h1>💰 MY WALLET</h1>
-
-<div class="box">
-
-<h2>
-
-💰 Wallet Balance :
-₹1000
-
-</h2>
-
-<br>
-
-<h2>
-
-🏆 Winning Balance :
-₹0
-
-</h2>
-
-</div>
-
-<div class="box">
-
-<h2>
-
-🧾 Transaction History
-
-</h2>
+">
 
 <h3>
 
-💵 Deposit ₹1000
+💰 ${data.type}
 
 </h3>
 
-<h3>
+<p>
 
-🏆 Winning ₹0
+Amount : ₹${data.amount}
 
-</h3>
+</p>
+
+<p>
+
+Status : ${data.status}
+
+</p>
+
+<p>
+
+UID : ${data.uid}
+
+</p>
 
 </div>
 
-<a href="payment.html">
+`;
 
-<button>
+});
 
-ADD MONEY
+}
 
-</button>
+loadHistory();
 
-</a>
-
-<a href="withdraw.html">
-
-<button>
-
-WITHDRAW
-
-</button>
-
-</a>
-
-</body>
-
-</html>
+</script>
