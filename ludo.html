@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MASTER REAL LUDO KING</title>
+<title>ELITE FINAL REAL LUDO KING</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#070707;
+background:#050505;
 font-family:Arial;
 color:white;
 text-align:center;
@@ -21,8 +20,8 @@ overflow-x:hidden;
 }
 
 h1{
-margin-top:15px;
 font-size:38px;
+margin-top:15px;
 }
 
 .turnBox{
@@ -45,7 +44,6 @@ margin:20px auto;
 display:grid;
 
 grid-template-columns:repeat(15,1fr);
-
 grid-template-rows:repeat(15,1fr);
 
 background:white;
@@ -58,21 +56,17 @@ border:5px solid #222;
 
 box-shadow:0 0 35px rgba(0,0,0,0.9);
 
-position:relative;
-
 }
 
 .cell{
 
 border:1px solid #ddd;
 
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
 position:relative;
+
+display:flex;
+justify-content:center;
+align-items:center;
 
 box-sizing:border-box;
 
@@ -99,7 +93,7 @@ background:white;
 }
 
 .safe{
-background:#ececec;
+background:#ededed;
 }
 
 .center{
@@ -121,25 +115,11 @@ position:absolute;
 
 cursor:pointer;
 
-transition:0.18s linear;
+transition:0.15s linear;
 
-box-shadow:0 0 12px rgba(0,0,0,0.6);
-
-animation:pop 0.3s;
+box-shadow:0 0 12px rgba(0,0,0,0.7);
 
 z-index:2;
-
-}
-
-@keyframes pop{
-
-0%{
-transform:scale(0);
-}
-
-100%{
-transform:scale(1);
-}
 
 }
 
@@ -172,7 +152,7 @@ box-shadow:0 0 5px white;
 }
 
 50%{
-box-shadow:0 0 20px white;
+box-shadow:0 0 22px white;
 }
 
 100%{
@@ -194,6 +174,7 @@ transition:0.3s;
 .rollAnim{
 
 animation:shake 0.5s;
+
 }
 
 @keyframes shake{
@@ -235,7 +216,7 @@ border-radius:25px;
 background:linear-gradient(
 45deg,
 #8a2cff,
-#d85cff
+#e05fff
 );
 
 color:white;
@@ -243,12 +224,6 @@ color:white;
 margin-top:20px;
 
 box-shadow:0 0 25px purple;
-
-}
-
-button:active{
-
-transform:scale(0.95);
 
 }
 
@@ -290,7 +265,7 @@ left:0;
 width:100%;
 height:100%;
 
-background:rgba(0,0,0,0.85);
+background:rgba(0,0,0,0.88);
 
 display:none;
 
@@ -317,7 +292,7 @@ color:#00ff90;
 <body>
 
 <h1>
-🎮 MASTER REAL LUDO KING
+🎮 ELITE FINAL LUDO KING
 </h1>
 
 <div class="turnBox">
@@ -330,7 +305,7 @@ RED
 </div>
 
 <div class="info">
-🔥 MASTER VERSION
+🔥 ELITE FINAL VERSION
 </div>
 
 <div class="board"
@@ -355,7 +330,7 @@ id="winScreen">
 WINNER
 </h2>
 
-<button onclick="restartGame()">
+<button onclick="location.reload()">
 🔄 PLAY AGAIN
 </button>
 
@@ -385,41 +360,31 @@ i%15;
 
 if(row<6 && col<6){
 
-cell.classList.add(
-"red-home"
-);
+cell.classList.add("red-home");
 
 }
 
 else if(row<6 && col>8){
 
-cell.classList.add(
-"green-home"
-);
+cell.classList.add("green-home");
 
 }
 
 else if(row>8 && col<6){
 
-cell.classList.add(
-"blue-home"
-);
+cell.classList.add("blue-home");
 
 }
 
 else if(row>8 && col>8){
 
-cell.classList.add(
-"yellow-home"
-);
+cell.classList.add("yellow-home");
 
 }
 
 else if(row==7 && col==7){
 
-cell.classList.add(
-"center"
-);
+cell.classList.add("center");
 
 cell.innerHTML="🏆";
 
@@ -427,9 +392,7 @@ cell.innerHTML="🏆";
 
 else{
 
-cell.classList.add(
-"path"
-);
+cell.classList.add("path");
 
 }
 
@@ -446,9 +409,7 @@ const safeSpots = [
 
 safeSpots.forEach(i=>{
 
-cells[i].classList.add(
-"safe"
-);
+cells[i].classList.add("safe");
 
 cells[i].innerHTML="⭐";
 
@@ -456,11 +417,12 @@ cells[i].innerHTML="⭐";
 
 const path = [
 
-6,7,8,23,38,53,68,83,98,113,128,127,
-126,125,124,123,122,121,136,151,166,
-181,196,211,212,213,214,215,216,217,
-218,219,220,205,190,175,160,145,130,
-115,100,85,70,55,40,25,10,9
+6,7,8,23,38,53,68,83,98,113,128,
+127,126,125,124,123,122,121,136,
+151,166,181,196,211,212,213,214,
+215,216,217,218,219,220,205,190,
+175,160,145,130,115,100,85,70,
+55,40,25,10,9
 
 ];
 
@@ -530,17 +492,17 @@ clearTokens();
 for(let player in players){
 
 players[player].forEach(
-(tokenData,index)=>{
+(token,index)=>{
 
-const token =
+const t =
 document.createElement("div");
 
-token.classList.add(
+t.classList.add(
 "token"
 );
 
-token.classList.add(
-tokenData.class
+t.classList.add(
+token.class
 );
 
 if(
@@ -548,13 +510,13 @@ player==
 turns[currentTurn]
 ){
 
-token.classList.add(
+t.classList.add(
 "active"
 );
 
 }
 
-token.onclick=()=>{
+t.onclick=()=>{
 
 moveToken(
 player,
@@ -563,21 +525,19 @@ index
 
 };
 
-if(tokenData.pos==-1){
+if(token.pos==-1){
 
 cells[
 homePositions[player][index]
-].appendChild(token);
+].appendChild(t);
 
 }
 
-else if(
-tokenData.pos<path.length
-){
+else{
 
 cells[
-path[tokenData.pos]
-].appendChild(token);
+path[token.pos]
+].appendChild(t);
 
 }
 
@@ -591,7 +551,7 @@ function nextTurn(){
 
 currentTurn++;
 
-if(currentTurn>=turns.length){
+if(currentTurn>=4){
 
 currentTurn=0;
 
@@ -608,7 +568,7 @@ if(
 turns[currentTurn]!="RED"
 ){
 
-setTimeout(aiMove,1200);
+setTimeout(aiPlay,1000);
 
 }
 
@@ -700,14 +660,22 @@ return;
 
 else{
 
-let steps = currentDice;
+let steps =
+currentDice;
 
-let moveInterval =
+let move =
 setInterval(()=>{
 
 if(steps>0){
 
 token.pos++;
+
+if(token.pos>=path.length){
+
+token.pos=
+path.length-1;
+
+}
 
 steps--;
 
@@ -717,9 +685,7 @@ drawTokens();
 
 else{
 
-clearInterval(
-moveInterval
-);
+clearInterval(move);
 
 finishMove(
 player,
@@ -728,7 +694,7 @@ index
 
 }
 
-},150);
+},140);
 
 }
 
@@ -741,10 +707,9 @@ function finishMove(player,index){
 let token =
 players[player][index];
 
-if(token.pos>=path.length-1){
-
-token.pos=
-path.length-1;
+if(
+token.pos>=path.length-1
+){
 
 showWinner(player);
 
@@ -756,15 +721,11 @@ killCheck(player,index);
 
 drawTokens();
 
-if(currentDice!=6){
-
 setTimeout(()=>{
 
 nextTurn();
 
 },500);
-
-}
 
 }
 
@@ -802,19 +763,19 @@ t.pos=-1;
 
 }
 
-function aiMove(){
+function aiPlay(){
 
 rollNow();
 
-let aiPlayer =
+let ai =
 turns[currentTurn];
 
 let tokens =
-players[aiPlayer];
+players[ai];
 
-let playable = 0;
+let choice = 0;
 
-for(let i=0;i<tokens.length;i++){
+for(let i=0;i<4;i++){
 
 if(
 tokens[i].pos!=-1
@@ -822,7 +783,8 @@ tokens[i].pos!=-1
 currentDice==6
 ){
 
-playable=i;
+choice=i;
+
 break;
 
 }
@@ -831,7 +793,7 @@ break;
 
 setTimeout(()=>{
 
-moveToken(aiPlayer,playable);
+moveToken(ai,choice);
 
 },700);
 
@@ -858,15 +820,9 @@ confetti();
 
 }
 
-function restartGame(){
-
-location.reload();
-
-}
-
 function confetti(){
 
-for(let i=0;i<70;i++){
+for(let i=0;i<80;i++){
 
 const div =
 document.createElement("div");
@@ -896,7 +852,10 @@ setInterval(()=>{
 div.style.top=
 parseInt(div.style.top)+5+"px";
 
-if(parseInt(div.style.top)>window.innerHeight){
+if(
+parseInt(div.style.top)>
+window.innerHeight
+){
 
 clearInterval(fall);
 
@@ -915,5 +874,4 @@ drawTokens();
 </script>
 
 </body>
-
 </html>
