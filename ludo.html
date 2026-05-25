@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Ludo King</title>
+<title>Custom Ludo</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -12,17 +12,75 @@ content="width=device-width, initial-scale=1.0">
 
 body{
 margin:0;
-overflow:hidden;
-background:black;
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
 }
 
-iframe{
-position:fixed;
-top:-90px;
-left:0;
-width:100%;
-height:calc(100vh + 90px);
+.top{
+background:black;
+padding:20px;
+font-size:40px;
+font-weight:bold;
+}
+
+.board{
+display:grid;
+grid-template-columns:repeat(5,70px);
+grid-template-rows:repeat(5,70px);
+gap:5px;
+justify-content:center;
+margin-top:40px;
+}
+
+.cell{
+width:70px;
+height:70px;
+background:white;
+border-radius:12px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+font-weight:bold;
+color:black;
+}
+
+.player{
+background:red;
+color:white;
+}
+
+.finish{
+background:green;
+color:white;
+}
+
+.controls{
+margin-top:40px;
+}
+
+button{
+padding:20px 40px;
+font-size:28px;
+font-weight:bold;
 border:none;
+border-radius:18px;
+background:#8a2cff;
+color:white;
+margin-top:20px;
+}
+
+#dice{
+font-size:60px;
+margin-top:20px;
+}
+
+#winner{
+font-size:35px;
+color:#00ff90;
+margin-top:30px;
 }
 
 </style>
@@ -31,10 +89,126 @@ border:none;
 
 <body>
 
-<iframe
-src="https://games.crazygames.com/en_US/ludo-king/index.html?v=1.321">
+<div class="top">
 
-</iframe>
+🎮 CUSTOM LUDO
+
+</div>
+
+<div class="board">
+
+<div class="cell player" id="c1">
+
+🚗
+
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell finish">
+
+🏆
+
+</div>
+
+</div>
+
+<div class="controls">
+
+<h1>
+
+🎲 Dice
+
+</h1>
+
+<div id="dice">
+
+1
+
+</div>
+
+<button onclick="rollDice()">
+
+ROLL DICE
+
+</button>
+
+<div id="winner">
+
+</div>
+
+</div>
+
+<script>
+
+let position = 1;
+
+function rollDice(){
+
+const dice =
+Math.floor(Math.random()*6)+1;
+
+document.getElementById("dice")
+.innerHTML = dice;
+
+document.getElementById(
+"c"+position
+).innerHTML = "";
+
+document.getElementById(
+"c"+position
+).classList.remove("player");
+
+position += dice;
+
+if(position >= 25){
+
+document.getElementById(
+"winner"
+).innerHTML =
+"🏆 YOU WIN";
+
+return;
+
+}
+
+document.getElementById(
+"c"+position
+).innerHTML = "🚗";
+
+document.getElementById(
+"c"+position
+).classList.add("player");
+
+}
+
+</script>
 
 </body>
 
