@@ -1,6 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>My Wallet</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+padding:20px;
+}
+
+.top{
+font-size:45px;
+font-weight:bold;
+padding:20px 0;
+}
+
+.box{
+background:#161622;
+padding:25px;
+border-radius:25px;
+margin-top:25px;
+}
+
+.balance{
+font-size:28px;
+font-weight:bold;
+margin-top:30px;
+}
+
+.btn{
+width:100%;
+padding:20px;
+font-size:28px;
+font-weight:bold;
+border:none;
+border-radius:20px;
+margin-top:25px;
+background:#12c8ff;
+color:white;
+}
+
+.history{
+background:#222;
+padding:18px;
+border-radius:18px;
+margin-top:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+💰 MY WALLET
+
+</div>
+
 <div class="box">
 
-<h1>🧾 Transaction History</h1>
+<div class="balance">
+
+💰 Wallet Balance :
+₹<span id="walletBalance">
+
+0
+
+</span>
+
+</div>
+
+<div class="balance">
+
+🏆 Winning Balance :
+₹<span id="winningBalance">
+
+0
+
+</span>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h1>
+
+🧾 Transaction History
+
+</h1>
 
 <div id="historyBox">
 
@@ -9,6 +109,20 @@ Loading...
 </div>
 
 </div>
+
+<button class="btn"
+onclick="location.href='addmoney.html'">
+
+ADD MONEY
+
+</button>
+
+<button class="btn"
+onclick="location.href='withdraw.html'">
+
+WITHDRAW
+
+</button>
 
 <script type="module">
 
@@ -19,6 +133,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 
 getFirestore,
+doc,
+getDoc,
 collection,
 getDocs
 
@@ -46,8 +162,43 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const historyBox =
-document.getElementById("historyBox");
+const uid =
+localStorage.getItem("uid");
+
+async function loadWallet(){
+
+if(!uid){
+
+return;
+
+}
+
+const userRef =
+doc(db,"users",uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
+
+const data =
+userSnap.data();
+
+document.getElementById(
+"walletBalance"
+).innerHTML =
+data.money || 0;
+
+document.getElementById(
+"winningBalance"
+).innerHTML =
+data.winning || 0;
+
+}
+
+}
+
+loadWallet();
 
 async function loadHistory(){
 
@@ -56,20 +207,22 @@ await getDocs(
 collection(db,"transactions")
 );
 
+const historyBox =
+document.getElementById(
+"historyBox"
+);
+
 historyBox.innerHTML = "";
 
 querySnapshot.forEach((item)=>{
 
 const data = item.data();
 
+if(data.uid == uid){
+
 historyBox.innerHTML += `
 
-<div style="
-background:#222;
-padding:15px;
-margin-top:15px;
-border-radius:15px;
-">
+<div class="history">
 
 <h3>
 
@@ -79,25 +232,23 @@ border-radius:15px;
 
 <p>
 
-Amount : ₹${data.amount}
+Amount :
+₹${data.amount}
 
 </p>
 
 <p>
 
-Status : ${data.status}
-
-</p>
-
-<p>
-
-UID : ${data.uid}
+Status :
+${data.status}
 
 </p>
 
 </div>
 
 `;
+
+}
 
 });
 
@@ -106,3 +257,7 @@ UID : ${data.uid}
 loadHistory();
 
 </script>
+
+</body>
+
+</html>
