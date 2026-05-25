@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Admin Panel</title>
+<title>Advanced Admin Panel</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -13,36 +13,52 @@ content="width=device-width, initial-scale=1.0">
 body{
 margin:0;
 font-family:Arial;
-background:#111;
+background:#0f0f0f;
 color:white;
-text-align:center;
+padding:15px;
 }
 
 .top{
-background:black;
-padding:20px;
 font-size:35px;
 font-weight:bold;
-}
-
-.box{
-background:#1e1e1e;
-margin:20px;
+text-align:center;
 padding:20px;
+background:black;
 border-radius:20px;
-font-size:20px;
-line-height:40px;
 }
 
-button{
-padding:15px 30px;
-font-size:20px;
+.card{
+background:#1c1c1c;
+padding:20px;
+margin-top:20px;
+border-radius:20px;
+}
+
+h2{
+margin:10px 0;
+}
+
+.btn{
+width:100%;
+padding:16px;
 border:none;
 border-radius:12px;
-background:#00cfff;
-color:white;
+font-size:20px;
 font-weight:bold;
 margin-top:15px;
+color:white;
+}
+
+.approve{
+background:green;
+}
+
+.failed{
+background:red;
+}
+
+.pending{
+background:orange;
 }
 
 </style>
@@ -57,9 +73,22 @@ margin-top:15px;
 
 </div>
 
-<div id="requests">
+<div class="card">
 
-Loading...
+<h2>
+
+💰 Total Deposits :
+₹<span id="totalDeposit">
+
+0
+
+</span>
+
+</h2>
+
+</div>
+
+<div id="requestBox">
 
 </div>
 
@@ -76,7 +105,8 @@ collection,
 getDocs,
 doc,
 getDoc,
-updateDoc
+updateDoc,
+addDoc
 
 }
 
@@ -84,17 +114,17 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+apiKey: "YOUR_API_KEY",
 
 authDomain: "skyadda-1d849.firebaseapp.com",
 
 projectId: "skyadda-1d849",
 
-storageBucket: "skyadda-1d849.firebasestorage.app",
+storageBucket: "skyadda-1d849.appspot.com",
 
-messagingSenderId: "929894889505",
+messagingSenderId: "YOUR_SENDER_ID",
 
-appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+appId: "YOUR_APP_ID"
 
 };
 
@@ -103,7 +133,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const requestBox =
-document.getElementById("requests");
+document.getElementById("requestBox");
+
+let total = 0;
 
 async function loadRequests(){
 
@@ -118,37 +150,50 @@ querySnapshot.forEach((item)=>{
 
 const data = item.data();
 
+total += Number(data.amount || 0);
+
 requestBox.innerHTML += `
 
-<div class="box">
+<div class="card">
 
-🆔 UID:
-<br>
-${data.uid}
+<h2>👤 UID</h2>
 
-<br><br>
+<p>${data.uid}</p>
 
-💰 Amount:
-₹${data.amount}
+<h2>💰 Amount</h2>
 
-<br><br>
+<p>₹${data.amount}</p>
 
-🧾 UTR:
-${data.utr}
+<h2>🧾 UTR</h2>
 
-<br><br>
+<p>${data.utr}</p>
 
-📌 Status:
+<h2>
+
+📌 Status :
 ${data.status}
 
-<br>
+</h2>
 
 <button
-class="addbtn"
-data-uid="${data.uid}"
-data-amount="${data.amount}">
+class="btn approve"
+onclick="approveRequest(
+'${item.id}',
+'${data.uid}',
+${data.amount}
+)">
 
-ADD MONEY
+APPROVE
+
+</button>
+
+<button
+class="btn failed"
+onclick="failRequest(
+'${item.id}'
+)">
+
+FAILED
 
 </button>
 
@@ -158,34 +203,29 @@ ADD MONEY
 
 });
 
+document.getElementById("totalDeposit")
+.innerHTML = total;
+
 }
 
 loadRequests();
 
-document.addEventListener("click",
-
-async function(e){
-
-if(e.target.classList.contains("addbtn")){
-
-let uid =
-e.target.getAttribute("data-uid");
-
-let amount =
-e.target.getAttribute("data-amount");
+window.approveRequest =
+async function(id,uid,amount){
 
 const userRef =
 doc(db,"users",uid);
 
-const snap =
+const userSnap =
 await getDoc(userRef);
 
-if(snap.exists()){
+if(userSnap.exists()){
 
-const data = snap.data();
+const userData =
+userSnap.data();
 
 let currentMoney =
-data.money || 0;
+userData.money || 0;
 
 await updateDoc(userRef,{
 
@@ -194,7 +234,27 @@ currentMoney + Number(amount)
 
 });
 
-alert("✅ Money Added");
+const reqRef =
+doc(db,"depositRequests",id);
+
+await updateDoc(reqRef,{
+
+status:"Approved"
+
+});
+
+await addDoc(
+collection(db,"transactions"),
+{
+
+uid:uid,
+type:"Deposit",
+amount:amount,
+status:"Approved"
+
+});
+
+alert("✅ Payment Approved");
 
 location.reload();
 
@@ -202,7 +262,23 @@ location.reload();
 
 }
 
+window.failRequest =
+async function(id){
+
+const reqRef =
+doc(db,"depositRequests",id);
+
+await updateDoc(reqRef,{
+
+status:"Failed"
+
 });
+
+alert("❌ Request Failed");
+
+location.reload();
+
+}
 
 </script>
 
