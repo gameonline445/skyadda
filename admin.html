@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Advanced Admin Panel</title>
+<title>Realtime Admin Panel</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -34,10 +34,6 @@ margin-top:20px;
 border-radius:20px;
 }
 
-h2{
-margin:10px 0;
-}
-
 .btn{
 width:100%;
 padding:16px;
@@ -57,8 +53,10 @@ background:green;
 background:red;
 }
 
-.pending{
-background:orange;
+.time{
+color:#aaa;
+margin-top:10px;
+font-size:15px;
 }
 
 </style>
@@ -69,7 +67,7 @@ background:orange;
 
 <div class="top">
 
-👨‍💼 ADMIN PANEL
+👨‍💼 REALTIME ADMIN PANEL
 
 </div>
 
@@ -173,6 +171,9 @@ const data = item.data();
 
 total += Number(data.amount || 0);
 
+const time =
+data.time || "No Time";
+
 const card = `
 
 <div class="card">
@@ -195,6 +196,12 @@ const card = `
 ${data.status}
 
 </h2>
+
+<div class="time">
+
+📅 ${time}
+
+</div>
 
 <button
 class="btn approve"
@@ -254,6 +261,9 @@ loadRequests();
 window.approveRequest =
 async function(id,uid,amount){
 
+const now =
+new Date().toLocaleString();
+
 const userRef =
 doc(db,"users",uid);
 
@@ -280,7 +290,8 @@ doc(db,"depositRequests",id);
 
 await updateDoc(reqRef,{
 
-status:"Approved"
+status:"Approved",
+time:now
 
 });
 
@@ -291,7 +302,8 @@ collection(db,"transactions"),
 uid:uid,
 type:"Deposit",
 amount:amount,
-status:"Approved"
+status:"Approved",
+time:now
 
 });
 
@@ -306,12 +318,16 @@ location.reload();
 window.failRequest =
 async function(id,uid,amount){
 
+const now =
+new Date().toLocaleString();
+
 const reqRef =
 doc(db,"depositRequests",id);
 
 await updateDoc(reqRef,{
 
-status:"Failed"
+status:"Failed",
+time:now
 
 });
 
@@ -322,7 +338,8 @@ collection(db,"transactions"),
 uid:uid,
 type:"Deposit",
 amount:amount,
-status:"Failed"
+status:"Failed",
+time:now
 
 });
 
