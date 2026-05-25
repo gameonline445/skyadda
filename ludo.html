@@ -6,14 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>REAL CUSTOM LUDO NEXT</title>
+<title>REAL LUDO KING UPGRADE</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#121212;
+background:#111;
 font-family:Arial;
 color:white;
 text-align:center;
@@ -26,7 +26,12 @@ font-size:38px;
 }
 
 .turnBox{
-font-size:24px;
+font-size:25px;
+margin-top:10px;
+}
+
+.info{
+font-size:20px;
 margin-top:10px;
 }
 
@@ -50,6 +55,8 @@ border-radius:20px;
 overflow:hidden;
 
 border:5px solid #222;
+
+box-shadow:0 0 25px rgba(0,0,0,0.8);
 
 }
 
@@ -96,7 +103,7 @@ background:#ddd;
 .center{
 background:black;
 color:white;
-font-size:22px;
+font-size:24px;
 }
 
 .token{
@@ -114,9 +121,9 @@ cursor:pointer;
 
 transition:0.3s;
 
-animation:pop 0.3s;
-
 box-shadow:0 0 10px rgba(0,0,0,0.5);
+
+animation:pop 0.3s;
 
 }
 
@@ -151,6 +158,7 @@ background:gold;
 .active{
 
 animation:glow 1s infinite;
+z-index:5;
 
 }
 
@@ -172,8 +180,23 @@ box-shadow:0 0 5px white;
 
 #dice{
 
-font-size:90px;
+font-size:95px;
+
 margin-top:10px;
+
+animation:diceAnim 0.5s;
+
+}
+
+@keyframes diceAnim{
+
+0%{
+transform:rotate(0deg) scale(0.5);
+}
+
+100%{
+transform:rotate(360deg) scale(1);
+}
 
 }
 
@@ -201,22 +224,41 @@ margin-top:20px;
 
 box-shadow:0 0 20px purple;
 
+transition:0.3s;
+
+}
+
+button:active{
+
+transform:scale(0.95);
+
 }
 
 #winner{
 
-font-size:36px;
+font-size:40px;
 
 margin-top:20px;
 
 color:#00ff90;
 
+animation:winnerGlow 1s infinite;
+
 }
 
-.info{
+@keyframes winnerGlow{
 
-font-size:20px;
-margin-top:10px;
+0%{
+text-shadow:0 0 5px #00ff90;
+}
+
+50%{
+text-shadow:0 0 20px #00ff90;
+}
+
+100%{
+text-shadow:0 0 5px #00ff90;
+}
 
 }
 
@@ -227,22 +269,20 @@ margin-top:10px;
 <body>
 
 <h1>
-🎮 REAL CUSTOM LUDO
+🎮 REAL LUDO KING
 </h1>
 
 <div class="turnBox">
 
 TURN :
 <span id="turnText">
-
 RED
-
 </span>
 
 </div>
 
 <div class="info">
-⭐ Next Upgrade Version
+⭐ Ultimate Upgrade Version
 </div>
 
 <div class="board"
@@ -251,20 +291,18 @@ id="board">
 </div>
 
 <div id="dice">
-
 ⚀
-
 </div>
 
 <button onclick="rollDice()">
-
 🎲 ROLL DICE
-
 </button>
 
-<div id="winner">
+<div id="winner"></div>
 
-</div>
+<audio id="moveSound">
+<source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3">
+</audio>
 
 <script>
 
@@ -537,6 +575,10 @@ return;
 
 }
 
+document.getElementById(
+"moveSound"
+).play();
+
 let token =
 players[player][index];
 
@@ -558,7 +600,28 @@ return;
 
 else{
 
-token.pos += currentDice;
+let move =
+setInterval(()=>{
+
+if(currentDice>0){
+
+token.pos++;
+
+currentDice--;
+
+drawTokens();
+
+}
+
+else{
+
+clearInterval(move);
+
+}
+
+},200);
+
+}
 
 if(token.pos>=path.length-1){
 
@@ -568,9 +631,9 @@ path.length-1;
 document.getElementById(
 "winner"
 ).innerHTML =
-"🏆 "+player+" WINS";
+"🏆 "+player+" WINS 🎉";
 
-}
+confetti();
 
 }
 
@@ -583,8 +646,6 @@ if(currentDice!=6){
 nextTurn();
 
 }
-
-currentDice=0;
 
 }
 
@@ -617,6 +678,52 @@ t.pos=-1;
 });
 
 }
+
+}
+
+}
+
+function confetti(){
+
+for(let i=0;i<40;i++){
+
+const div =
+document.createElement("div");
+
+div.style.position="fixed";
+
+div.style.width="10px";
+
+div.style.height="10px";
+
+div.style.background=
+["red","yellow","blue","green"]
+[Math.floor(Math.random()*4)];
+
+div.style.left=
+Math.random()*100+"vw";
+
+div.style.top="-10px";
+
+div.style.zIndex="9999";
+
+document.body.appendChild(div);
+
+let fall =
+setInterval(()=>{
+
+div.style.top=
+parseInt(div.style.top)+5+"px";
+
+if(parseInt(div.style.top)>window.innerHeight){
+
+clearInterval(fall);
+
+div.remove();
+
+}
+
+},30);
 
 }
 
