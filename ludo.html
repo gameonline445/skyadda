@@ -6,14 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ULTIMATE REAL CUSTOM LUDO</title>
+<title>PRO REAL LUDO KING</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#0f0f0f;
+background:#0b0b0b;
 font-family:Arial;
 color:white;
 text-align:center;
@@ -58,6 +58,8 @@ border:5px solid #222;
 
 box-shadow:0 0 30px rgba(0,0,0,0.8);
 
+position:relative;
+
 }
 
 .cell{
@@ -97,7 +99,7 @@ background:white;
 }
 
 .safe{
-background:#e7e7e7;
+background:#ececec;
 }
 
 .center{
@@ -119,7 +121,7 @@ position:absolute;
 
 cursor:pointer;
 
-transition:0.25s;
+transition:0.18s linear;
 
 box-shadow:0 0 12px rgba(0,0,0,0.6);
 
@@ -175,6 +177,26 @@ box-shadow:0 0 20px white;
 
 100%{
 box-shadow:0 0 5px white;
+}
+
+}
+
+.killFlash{
+
+animation:killAnim 0.5s;
+
+}
+
+@keyframes killAnim{
+
+0%{
+transform:scale(1);
+opacity:1;
+}
+
+100%{
+transform:scale(2);
+opacity:0;
 }
 
 }
@@ -252,7 +274,7 @@ transform:scale(0.95);
 
 #winner{
 
-font-size:40px;
+font-size:42px;
 
 margin-top:20px;
 
@@ -278,6 +300,42 @@ text-shadow:0 0 5px #00ff90;
 
 }
 
+.overlay{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.8);
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+flex-direction:column;
+
+z-index:9999;
+
+}
+
+.overlay h2{
+
+font-size:50px;
+color:#00ff90;
+
+}
+
+.overlay button{
+
+margin-top:20px;
+
+}
+
 </style>
 
 </head>
@@ -285,7 +343,7 @@ text-shadow:0 0 5px #00ff90;
 <body>
 
 <h1>
-🎮 ULTIMATE LUDO KING
+🎮 PRO REAL LUDO KING
 </h1>
 
 <div class="turnBox">
@@ -298,7 +356,7 @@ RED
 </div>
 
 <div class="info">
-🔥 BIGGEST CUSTOM VERSION
+🔥 PRO ULTIMATE VERSION
 </div>
 
 <div class="board"
@@ -315,6 +373,19 @@ id="board">
 </button>
 
 <div id="winner"></div>
+
+<div class="overlay"
+id="winScreen">
+
+<h2 id="winText">
+WINNER
+</h2>
+
+<button onclick="restartGame()">
+🔄 PLAY AGAIN
+</button>
+
+</div>
 
 <audio id="moveSound">
 <source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3">
@@ -659,7 +730,7 @@ index
 
 }
 
-},180);
+},150);
 
 }
 
@@ -687,12 +758,7 @@ if(token.pos>=path.length-1){
 token.pos=
 path.length-1;
 
-document.getElementById(
-"winner"
-).innerHTML =
-"🏆 "+player+" WINS 🎉";
-
-confetti();
+showWinner(player);
 
 }
 
@@ -736,9 +802,36 @@ t.pos=-1;
 
 }
 
+function showWinner(player){
+
+document.getElementById(
+"winner"
+).innerHTML =
+"🏆 "+player+" WINS 🎉";
+
+document.getElementById(
+"winText"
+).innerHTML =
+"🏆 "+player+" WINS";
+
+document.getElementById(
+"winScreen"
+).style.display=
+"flex";
+
+confetti();
+
+}
+
+function restartGame(){
+
+location.reload();
+
+}
+
 function confetti(){
 
-for(let i=0;i<50;i++){
+for(let i=0;i<60;i++){
 
 const div =
 document.createElement("div");
