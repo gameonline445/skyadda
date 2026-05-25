@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Realtime Admin Panel</title>
+<title>Secure Admin Panel</title>
 
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
@@ -65,9 +65,27 @@ font-size:15px;
 
 <body>
 
+<script>
+
+const adminPassword = "12345";
+
+const enteredPassword =
+prompt("Enter Admin Password");
+
+if(enteredPassword != adminPassword){
+
+alert("❌ Wrong Password");
+
+window.location.href =
+"index.html";
+
+}
+
+</script>
+
 <div class="top">
 
-👨‍💼 REALTIME ADMIN PANEL
+👨‍💼 SECURE ADMIN PANEL
 
 </div>
 
