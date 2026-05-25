@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ELITE FINAL REAL LUDO KING</title>
+<title>ULTRA ONLINE LUDO KING</title>
 
 <style>
 
@@ -20,18 +20,24 @@ overflow-x:hidden;
 }
 
 h1{
-font-size:38px;
+font-size:34px;
 margin-top:15px;
 }
 
 .turnBox{
-font-size:26px;
+font-size:24px;
 margin-top:10px;
 }
 
 .info{
-font-size:20px;
+font-size:18px;
 margin-top:10px;
+}
+
+.wallet{
+font-size:22px;
+margin-top:8px;
+color:#00ff99;
 }
 
 .board{
@@ -167,51 +173,33 @@ font-size:95px;
 
 margin-top:10px;
 
-transition:0.3s;
-
 }
 
 .rollAnim{
-
 animation:shake 0.5s;
-
 }
 
 @keyframes shake{
 
-0%{
-transform:rotate(0deg);
-}
-
-25%{
-transform:rotate(20deg);
-}
-
-50%{
-transform:rotate(-20deg);
-}
-
-75%{
-transform:rotate(10deg);
-}
-
-100%{
-transform:rotate(0deg);
-}
+0%{transform:rotate(0deg);}
+25%{transform:rotate(20deg);}
+50%{transform:rotate(-20deg);}
+75%{transform:rotate(10deg);}
+100%{transform:rotate(0deg);}
 
 }
 
 button{
 
-padding:18px 60px;
+padding:16px 45px;
 
-font-size:26px;
+font-size:24px;
 
 font-weight:bold;
 
 border:none;
 
-border-radius:25px;
+border-radius:22px;
 
 background:linear-gradient(
 45deg,
@@ -229,29 +217,31 @@ box-shadow:0 0 25px purple;
 
 #winner{
 
-font-size:42px;
+font-size:40px;
 
-margin-top:20px;
+margin-top:15px;
 
 color:#00ff90;
 
-animation:winnerGlow 1s infinite;
+}
+
+.roomBox{
+
+margin-top:10px;
 
 }
 
-@keyframes winnerGlow{
+input{
 
-0%{
-text-shadow:0 0 5px #00ff90;
-}
+padding:10px;
 
-50%{
-text-shadow:0 0 20px #00ff90;
-}
+border:none;
 
-100%{
-text-shadow:0 0 5px #00ff90;
-}
+border-radius:10px;
+
+font-size:18px;
+
+width:180px;
 
 }
 
@@ -265,7 +255,7 @@ left:0;
 width:100%;
 height:100%;
 
-background:rgba(0,0,0,0.88);
+background:rgba(0,0,0,0.9);
 
 display:none;
 
@@ -280,7 +270,7 @@ z-index:9999;
 
 .overlay h2{
 
-font-size:50px;
+font-size:48px;
 color:#00ff90;
 
 }
@@ -292,8 +282,12 @@ color:#00ff90;
 <body>
 
 <h1>
-🎮 ELITE FINAL LUDO KING
+🎮 ULTRA ONLINE LUDO
 </h1>
+
+<div class="wallet">
+💰 Wallet : ₹100
+</div>
 
 <div class="turnBox">
 
@@ -305,7 +299,19 @@ RED
 </div>
 
 <div class="info">
-🔥 ELITE FINAL VERSION
+🔥 ULTRA ONLINE VERSION
+</div>
+
+<div class="roomBox">
+
+<input
+id="roomInput"
+placeholder="Enter Room Code">
+
+<button onclick="joinRoom()">
+JOIN ROOM
+</button>
+
 </div>
 
 <div class="board"
@@ -341,6 +347,27 @@ WINNER
 </audio>
 
 <script>
+
+function joinRoom(){
+
+let room =
+document.getElementById(
+"roomInput"
+).value;
+
+if(room==""){
+
+alert("ENTER ROOM CODE");
+
+return;
+
+}
+
+alert(
+"ROOM JOINED : "+room
+);
+
+}
 
 const board =
 document.getElementById("board");
@@ -417,12 +444,13 @@ cells[i].innerHTML="⭐";
 
 const path = [
 
-6,7,8,23,38,53,68,83,98,113,128,
-127,126,125,124,123,122,121,136,
-151,166,181,196,211,212,213,214,
-215,216,217,218,219,220,205,190,
-175,160,145,130,115,100,85,70,
-55,40,25,10,9
+6,7,8,23,38,53,68,83,98,113,
+128,127,126,125,124,123,122,
+121,136,151,166,181,196,211,
+212,213,214,215,216,217,218,
+219,220,205,190,175,160,145,
+130,115,100,85,70,55,40,25,
+10,9
 
 ];
 
@@ -822,7 +850,7 @@ confetti();
 
 function confetti(){
 
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
 
 const div =
 document.createElement("div");
