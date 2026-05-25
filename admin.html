@@ -57,10 +57,6 @@ background:green;
 background:red;
 }
 
-.pending{
-background:orange;
-}
-
 </style>
 
 </head>
@@ -190,7 +186,9 @@ APPROVE
 <button
 class="btn failed"
 onclick="failRequest(
-'${item.id}'
+'${item.id}',
+'${data.uid}',
+${data.amount}
 )">
 
 FAILED
@@ -263,13 +261,24 @@ location.reload();
 }
 
 window.failRequest =
-async function(id){
+async function(id,uid,amount){
 
 const reqRef =
 doc(db,"depositRequests",id);
 
 await updateDoc(reqRef,{
 
+status:"Failed"
+
+});
+
+await addDoc(
+collection(db,"transactions"),
+{
+
+uid:uid,
+type:"Deposit",
+amount:amount,
 status:"Failed"
 
 });
