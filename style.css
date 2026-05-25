@@ -1,191 +1,117 @@
-*{
-
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:sans-serif;
-
+* {
+    box-sizing: border-box;
 }
 
-body{
-
-background:#efe7c5;
-padding-bottom:100px;
-
+.ludo-container {
+    width: 450px;
+    margin: 20px auto;
 }
 
-/* TOPBAR */
+.ludo-container .ludo {
 
-.topbar{
-
-background:linear-gradient(to right,#000,#222);
-padding:25px;
-border-bottom:3px solid yellow;
-text-align:center;
-position:relative;
-color:white;
-
+    height: 450px;
+    width: 100%;
+    background-image: url('./ludo-bg.jpg');
+    background-size: contain;
+    position: relative;
 }
 
-.topbar h1{
-
-font-size:35px;
-
+.player-pieces {
+    height: 100%;
+    width: 100%;
 }
 
-.menu-icon{
+.player-piece {
+    width: 3%;
+    height: 3%;
+    border: 2px solid;
+    border-radius: 10px;
+    position: absolute;
+    transform: translate(50%, 50%);
+    transition: all .2s;
 
-font-size:30px;
-position:absolute;
-left:20px;
-top:25px;
-color:white;
+    z-index: 1;
 
+    /* top: 15%;
+    left: 50%; */
+}
+.player-piece.highlight {
+    cursor: pointer;
+    border: 2px dashed;
+    animation: spin 1s infinite linear;
+}
+@keyframes spin {
+    0% {
+        transform: translate(50%, 50%) rotate(0deg);
+    }
+    50% {
+        transform: translate(50%, 50%) rotate(180deg) scale(1.4);
+    }
+    100% {
+        transform: translate(50%, 50%) rotate(360deg);
+    }
 }
 
-/* WALLET */
-
-.wallet{
-
-display:flex;
-justify-content:space-around;
-margin-top:40px;
-
+[player-id="P1"].player-piece {
+    background-color: #2eafff;
 }
 
-.box{
-
-background:white;
-color:black;
-width:140px;
-padding:20px;
-border-radius:20px;
-font-size:30px;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
-font-weight:bold;
-text-align:center;
-
+[player-id="P2"].player-piece {
+    background-color: #00b550;
 }
 
-.box p{
-
-font-size:16px;
-margin-top:10px;
-
+.player-base {
+    width: 40%;
+    height: 40%;
+    border: 30px solid;
+    position: absolute;
 }
 
-/* BATTLE */
-
-.battle{
-
-background:white;
-color:black;
-margin:30px;
-padding:20px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
-
+.player-bases [player-id="P1"].player-base {
+    bottom: 0;
+    left: 0;
+    border-color: #1295e7;
 }
 
-.battle h2{
-
-margin-bottom:20px;
-
+.player-bases [player-id="P2"].player-base {
+    top: 0;
+    right: 0;
+    border-color: #049645;
 }
 
-input{
-
-padding:15px;
-width:70%;
-font-size:18px;
-margin-top:20px;
-border-radius:12px;
-border:2px solid #00b894;
-outline:none;
-
+.player-base.highlight {
+    animation: border-blink .7s infinite ease-in-out;
 }
 
-button{
-
-padding:15px 25px;
-background:linear-gradient(to right,#00b894,#00cec9);
-color:white;
-border:none;
-font-size:18px;
-border-radius:12px;
-margin-top:20px;
-font-weight:bold;
-
+@keyframes border-blink {
+    50% {
+        border-color: rgba(255, 255, 255, 0.8);
+    }
 }
 
-/* NOTICE */
-
-.notice{
-
-background:linear-gradient(to right,#000,#00b894);
-padding:20px;
-margin:20px;
-border-radius:15px;
-font-size:20px;
-color:white;
-
+.btn {
+    padding: 8px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-/* RUNNING */
-
-.running{
-
-background:white;
-color:black;
-margin:20px;
-padding:20px;
-border-radius:15px;
-
+.btn:disabled {
+    opacity: 0.5;
 }
 
-.running h2{
-
-margin-bottom:20px;
-
+.btn-dice {
+    background-color: #009d60;
+    color: white;
 }
 
-.run-card{
-
-display:flex;
-justify-content:space-between;
-background:#f1f1f1;
-padding:15px;
-margin-top:10px;
-border-radius:10px;
-font-size:20px;
-
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
 }
 
-/* BOTTOM MENU */
-
-.bottom-menu{
-
-position:fixed;
-bottom:0;
-width:100%;
-background:black;
-display:flex;
-justify-content:space-around;
-padding:15px 0;
-color:white;
-
-}
-
-.item{
-
-text-align:center;
-font-size:22px;
-
-}
-
-.item p{
-
-font-size:12px;
-margin-top:5px;
-
+.dice-value {
+    font-size: 24px;
+    font-weight: bold;
 }
