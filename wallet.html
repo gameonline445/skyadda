@@ -1,3 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Wallet</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+
+    body{
+      background:black;
+      color:white;
+      font-family:Arial;
+      padding:20px;
+    }
+
+    .box{
+      background:#16161d;
+      padding:20px;
+      border-radius:20px;
+      margin-top:20px;
+    }
+
+    button{
+      width:100%;
+      padding:18px;
+      border:none;
+      border-radius:15px;
+      background:#11c5f5;
+      color:white;
+      font-size:25px;
+      font-weight:bold;
+      margin-top:20px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<h1>💰 MY WALLET</h1>
+
+<div class="box">
+
+  <h2 id="walletBalance">💰 Wallet Balance : ₹0</h2>
+
+  <br>
+
+  <h2 id="winningBalance">🏆 Winning Balance : ₹0</h2>
+
+</div>
+
+<div class="box">
+
+  <h1>🧾 Transaction History</h1>
+
+  <h3>💵 Deposit ₹1000</h3>
+
+  <h3>🏆 Winning ₹0</h3>
+
+</div>
+
+<button>ADD MONEY</button>
+
+<button>WITHDRAW</button>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -32,15 +100,7 @@ const uid = localStorage.getItem("uid");
 
 async function loadWallet() {
 
-  if (!uid) {
-
-    document.getElementById("walletBalance").innerText = "₹0";
-
-    document.getElementById("winningBalance").innerText = "₹0";
-
-    return;
-
-  }
+  if (!uid) return;
 
   const userRef = doc(db, "users", uid);
 
@@ -50,17 +110,11 @@ async function loadWallet() {
 
     const data = userSnap.data();
 
-    document.getElementById("walletBalance").innerText =
-      "₹" + (data.money || 0);
+    document.getElementById("walletBalance").innerHTML =
+      "💰 Wallet Balance : ₹" + (data.money || 0);
 
-    document.getElementById("winningBalance").innerText =
-      "₹" + (data.winning || 0);
-
-  } else {
-
-    document.getElementById("walletBalance").innerText = "₹0";
-
-    document.getElementById("winningBalance").innerText = "₹0";
+    document.getElementById("winningBalance").innerHTML =
+      "🏆 Winning Balance : ₹" + (data.winning || 0);
 
   }
 
@@ -69,3 +123,6 @@ async function loadWallet() {
 loadWallet();
 
 </script>
+
+</body>
+</html>
