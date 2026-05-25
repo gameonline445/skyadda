@@ -1,24 +1,29 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 
 getFirestore,
-
 doc,
-
-getDoc,
-
-setDoc,
-
-updateDoc
+getDoc
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import {
+
+getAuth,
+onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 const firebaseConfig = {
 
-apiKey: "AIzaSyBNNnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
 
 authDomain: "skyadda-1d849.firebaseapp.com",
 
@@ -32,65 +37,42 @@ appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
 
 };
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const db =
+getFirestore(app);
 
-let uid = localStorage.getItem("uid");
+const auth =
+getAuth(app);
 
-async function loadWallet(){
+onAuthStateChanged(auth,
+async(user)=>{
 
-const ref = doc(db,"users",uid);
+if(user){
 
-const snap = await getDoc(ref);
+const uid = user.uid;
+
+const docRef =
+doc(db,"users",uid);
+
+const snap =
+await getDoc(docRef);
 
 if(snap.exists()){
 
-document.getElementById("wallet").innerHTML =
-snap.data().money;
+const data = snap.data();
 
-}else{
+document.getElementById("wallet")
+.innerHTML =
+"₹" + data.money;
 
-await setDoc(ref,{
+document.getElementById("winning")
+.innerHTML =
+"₹" + data.winning;
 
-money:0
+}
+
+}
 
 });
-
-document.getElementById("wallet").innerHTML = 0;
-
-}
-
-}
-
-loadWallet();
-
-document.getElementById("addmoney").onclick = async function(){
-
-let add = prompt("Enter Amount");
-
-if(add != null){
-
-const ref = doc(db,"users",uid);
-
-const snap = await getDoc(ref);
-
-let oldMoney = snap.data().money;
-
-let newMoney = parseInt(oldMoney)
-+ parseInt(add);
-
-await updateDoc(ref,{
-
-money:newMoney
-
-});
-
-document.getElementById("wallet").innerHTML =
-newMoney;
-
-alert("Money Added Successfully");
-
-}
-
-}
