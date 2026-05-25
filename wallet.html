@@ -1,194 +1,71 @@
-<!DOCTYPE html>
-<html>
+<script type="module">
 
-<head>
- 
-<title>MY WALLET</title>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<style>
-
-body{
-margin:0;
-padding:0;
-background:#000;
-font-family:Arial;
-color:white;
-}
-
-.top{
-background:#000;
-padding:25px;
-text-align:center;
-font-size:32px;
-font-weight:bold;
-}
-
-.wallet-box{
-background:#1c1c1f;
-margin:20px;
-padding:30px;
-border-radius:25px;
-font-size:24px;
-line-height:70px;
-}
-
-.history{
-background:#1c1c1f;
-margin:20px;
-padding:25px;
-border-radius:25px;
-}
-
-.history h2{
-font-size:28px;
-margin-bottom:20px;
-}
-
-.item{
-background:#2a2a2d;
-padding:18px;
-border-radius:15px;
-margin-top:15px;
-font-size:22px;
-}
-
-.btn{
-display:block;
-width:85%;
-margin:25px auto;
-padding:22px;
-border:none;
-border-radius:18px;
-background:#10cfff;
-color:white;
-font-size:28px;
-font-weight:bold;
-text-align:center;
-text-decoration:none;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="top">
-
-💰 MY WALLET
-
-</div>
-
-<div class="wallet-box">
-
-💰 Wallet Balance :
-₹<span id="wallet">0</span>
-
-<br><br>
-
-🏆 Winning Balance :
-₹<span id="winning">0</span>
-
-</div>
-
-<div class="history">
-
-<h2>
-
-🧾 Transaction History
-
-</h2>
-
-<div class="item">
-
-💵 Deposit ₹1000
-
-</div>
-
-<div class="item">
-
-🏆 Winning ₹0
-
-</div>
-
-</div>
-
-<a href="payment.html"
-class="btn">
-
-ADD MONEY
-
-</a>
-
-<a href="withdraw.html"
-class="btn">
-
-WITHDRAW
-
-</a>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-<script>
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+  apiKey: "YOUR_API_KEY",
 
-authDomain: "skyadda-1d849.firebaseapp.com",
+  authDomain: "skyadda-1d849.firebaseapp.com",
 
-projectId: "skyadda-1d849",
+  projectId: "skyadda-1d849",
 
-storageBucket: "skyadda-1d849.appspot.com",
+  storageBucket: "skyadda-1d849.appspot.com",
 
-messagingSenderId: "929894889505",
+  messagingSenderId: "YOUR_SENDER_ID",
 
-appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+  appId: "YOUR_APP_ID"
 
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-firebase.firestore();
+const db = getFirestore(app);
 
-db.collection("users")
+const uid = localStorage.getItem("uid");
 
-.doc("AEp1CmD980TmxnrdCiCUVFC7WMB2")
+async function loadWallet() {
 
-.get()
+  if (!uid) {
 
-.then((doc)=>{
+    document.getElementById("walletBalance").innerText = "₹0";
 
-if(doc.exists){
+    document.getElementById("winningBalance").innerText = "₹0";
 
-document.getElementById("wallet")
+    return;
 
-.innerHTML =
-doc.data().money;
+  }
 
-document.getElementById("winning")
+  const userRef = doc(db, "users", uid);
 
-.innerHTML =
-doc.data().winning;
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists()) {
+
+    const data = userSnap.data();
+
+    document.getElementById("walletBalance").innerText =
+      "₹" + (data.money || 0);
+
+    document.getElementById("winningBalance").innerText =
+      "₹" + (data.winning || 0);
+
+  } else {
+
+    document.getElementById("walletBalance").innerText = "₹0";
+
+    document.getElementById("winningBalance").innerText = "₹0";
+
+  }
 
 }
 
-})
-
-.catch((error)=>{
-
-console.log(error);
-
-});
+loadWallet();
 
 </script>
-
-</body>
-
-</html>
