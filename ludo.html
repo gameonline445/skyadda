@@ -5,17 +5,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>REAL CUSTOM LUDO KING</title>
+<title>REAL ENGINE X LUDO</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#050505;
+background:#060606;
 font-family:Arial;
 color:white;
 text-align:center;
+overflow-x:hidden;
 }
 
 h1{
@@ -24,7 +25,7 @@ margin-top:15px;
 }
 
 .turn{
-font-size:26px;
+font-size:24px;
 margin-top:10px;
 }
 
@@ -49,6 +50,8 @@ overflow:hidden;
 border:5px solid #222;
 
 box-shadow:0 0 35px rgba(0,0,0,0.9);
+
+position:relative;
 
 }
 
@@ -93,7 +96,7 @@ background:#ececec;
 .center{
 background:black;
 color:white;
-font-size:22px;
+font-size:20px;
 }
 
 .token{
@@ -109,9 +112,9 @@ position:absolute;
 
 cursor:pointer;
 
-z-index:5;
+transition:0.12s linear;
 
-transition:0.15s linear;
+z-index:10;
 
 }
 
@@ -160,9 +163,23 @@ margin-top:10px;
 
 }
 
+.roll{
+animation:shake 0.5s;
+}
+
+@keyframes shake{
+
+0%{transform:rotate(0deg);}
+25%{transform:rotate(20deg);}
+50%{transform:rotate(-20deg);}
+75%{transform:rotate(10deg);}
+100%{transform:rotate(0deg);}
+
+}
+
 button{
 
-padding:16px 40px;
+padding:16px 38px;
 
 font-size:22px;
 
@@ -188,7 +205,7 @@ margin-top:15px;
 
 #winner{
 
-font-size:36px;
+font-size:34px;
 
 margin-top:15px;
 
@@ -203,7 +220,7 @@ color:#00ff90;
 <body>
 
 <h1>
-🎮 REAL CUSTOM LUDO
+🎮 REAL ENGINE X LUDO
 </h1>
 
 <div class="turn">
@@ -294,7 +311,7 @@ const cells =
 document.querySelectorAll(".cell");
 
 const safeSpots = [
-6,38,68,98,128,166,196
+1,9,14,22,27,35,40,48
 ];
 
 safeSpots.forEach(i=>{
@@ -307,13 +324,12 @@ cells[i].innerHTML="⭐";
 
 const path = [
 
-6,7,8,23,38,53,68,83,98,113,
-128,127,126,125,124,123,122,
-121,136,151,166,181,196,211,
-212,213,214,215,216,217,218,
-219,220,205,190,175,160,145,
-130,115,100,85,70,55,40,25,
-10,9
+91,92,93,94,95,80,65,50,35,20,5,
+6,7,22,37,52,67,68,69,70,71,72,
+87,102,117,132,147,162,177,192,
+207,208,209,194,179,164,149,134,
+119,118,117,116,115,114,99,84,
+83,82,81,96,111,126
 
 ];
 
@@ -358,14 +374,14 @@ YELLOW:[208,209,223,224]
 
 };
 
-const order = [
+const turns = [
 "RED",
 "GREEN",
 "BLUE",
 "YELLOW"
 ];
 
-let current = 0;
+let currentTurn = 0;
 
 let diceValue = 0;
 
@@ -388,22 +404,16 @@ players[color].forEach(
 const div =
 document.createElement("div");
 
-div.classList.add(
-"token"
-);
+div.classList.add("token");
 
-div.classList.add(
-token.class
-);
+div.classList.add(token.class);
 
 if(
 color==
-order[current]
+turns[currentTurn]
 ){
 
-div.classList.add(
-"active"
-);
+div.classList.add("active");
 
 }
 
@@ -444,12 +454,23 @@ const faces = [
 "⚀","⚁","⚂","⚃","⚄","⚅"
 ];
 
+const dice =
+document.getElementById("dice");
+
+dice.classList.add("roll");
+
+setTimeout(()=>{
+
+dice.classList.remove(
+"roll"
+);
+
+},500);
+
 diceValue =
 Math.floor(Math.random()*6)+1;
 
-document.getElementById(
-"dice"
-).innerHTML =
+dice.innerHTML =
 faces[diceValue-1];
 
 }
@@ -457,7 +478,7 @@ faces[diceValue-1];
 function moveToken(color,index){
 
 if(
-color!=order[current]
+color!=turns[currentTurn]
 ){
 
 return;
@@ -531,7 +552,7 @@ index
 
 }
 
-},150);
+},120);
 
 }
 
@@ -539,11 +560,15 @@ function finishMove(color,index){
 
 killCheck(color,index);
 
-drawTokens();
-
 checkWinner(color);
 
+drawTokens();
+
+if(diceValue!=6){
+
 nextTurn();
+
+}
 
 diceValue=0;
 
@@ -567,7 +592,7 @@ active.pos
 t.pos!=-1
 &&
 !safeSpots.includes(
-path[t.pos]
+active.pos
 )
 ){
 
@@ -585,7 +610,7 @@ t.pos=-1;
 
 function checkWinner(color){
 
-let complete = 0;
+let done = 0;
 
 players[color].forEach(t=>{
 
@@ -593,13 +618,13 @@ if(
 t.pos>=path.length-1
 ){
 
-complete++;
+done++;
 
 }
 
 });
 
-if(complete==4){
+if(done==4){
 
 document.getElementById(
 "winner"
@@ -612,18 +637,18 @@ document.getElementById(
 
 function nextTurn(){
 
-current++;
+currentTurn++;
 
-if(current>=4){
+if(currentTurn>=4){
 
-current=0;
+currentTurn=0;
 
 }
 
 document.getElementById(
 "turnText"
 ).innerHTML =
-order[current];
+turns[currentTurn];
 
 }
 
