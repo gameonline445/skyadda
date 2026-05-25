@@ -5,14 +5,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GOD LEVEL ONLINE LUDO</title>
+<title>REAL GAMEPLAY ENGINE LUDO</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-background:#030303;
+background:#050505;
 font-family:Arial;
 color:white;
 text-align:center;
@@ -24,32 +24,9 @@ font-size:34px;
 margin-top:15px;
 }
 
-.topbar{
-
-display:flex;
-justify-content:center;
-gap:12px;
-flex-wrap:wrap;
+.turnBox{
+font-size:24px;
 margin-top:10px;
-
-}
-
-.box{
-
-background:#111;
-
-padding:10px 16px;
-
-border-radius:15px;
-
-box-shadow:0 0 12px rgba(255,255,255,0.1);
-
-font-size:16px;
-
-}
-
-.wallet{
-color:#00ff99;
 }
 
 .board{
@@ -88,6 +65,8 @@ align-items:center;
 
 box-sizing:border-box;
 
+font-size:12px;
+
 }
 
 .red-home{
@@ -111,19 +90,19 @@ background:white;
 }
 
 .safe{
-background:#ededed;
+background:#ececec;
 }
 
 .center{
 background:black;
 color:white;
-font-size:22px;
+font-size:20px;
 }
 
 .token{
 
-width:20px;
-height:20px;
+width:18px;
+height:18px;
 
 border-radius:50%;
 
@@ -135,7 +114,7 @@ cursor:pointer;
 
 transition:0.12s linear;
 
-box-shadow:0 0 12px rgba(0,0,0,0.7);
+box-shadow:0 0 10px rgba(0,0,0,0.7);
 
 z-index:2;
 
@@ -170,7 +149,7 @@ box-shadow:0 0 5px white;
 }
 
 50%{
-box-shadow:0 0 25px white;
+box-shadow:0 0 22px white;
 }
 
 100%{
@@ -181,16 +160,13 @@ box-shadow:0 0 5px white;
 
 #dice{
 
-font-size:95px;
-
+font-size:90px;
 margin-top:10px;
 
 }
 
 .rollAnim{
-
 animation:shake 0.5s;
-
 }
 
 @keyframes shake{
@@ -205,9 +181,9 @@ animation:shake 0.5s;
 
 button{
 
-padding:15px 28px;
+padding:15px 35px;
 
-font-size:18px;
+font-size:20px;
 
 font-weight:bold;
 
@@ -225,70 +201,15 @@ color:white;
 
 box-shadow:0 0 20px purple;
 
-margin-top:10px;
-
-}
-
-.roomArea{
-
-display:flex;
-justify-content:center;
-gap:10px;
-flex-wrap:wrap;
-margin-top:15px;
-
-}
-
-input{
-
-padding:12px;
-
-border:none;
-
-border-radius:12px;
-
-font-size:16px;
-
-width:180px;
+margin-top:12px;
 
 }
 
 #winner{
 
-font-size:40px;
+font-size:36px;
 
 margin-top:15px;
-
-color:#00ff90;
-
-}
-
-.overlay{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-background:rgba(0,0,0,0.92);
-
-display:none;
-
-justify-content:center;
-align-items:center;
-
-flex-direction:column;
-
-z-index:9999;
-
-}
-
-.overlay h2{
-
-font-size:48px;
 
 color:#00ff90;
 
@@ -301,52 +222,17 @@ color:#00ff90;
 <body>
 
 <h1>
-🎮 GOD LEVEL LUDO
+🎮 REAL GAMEPLAY LUDO
 </h1>
 
-<div class="topbar">
+<div class="turnBox">
 
-<div class="box">
-👤 Neeraj
-</div>
-
-<div class="box wallet">
-💰 ₹1000
-</div>
-
-<div class="box">
-🏆 Wins : 25
-</div>
-
-<div class="box">
-🔥 Rank : GOD
-</div>
+TURN :
+<span id="turnText">
+RED
+</span>
 
 </div>
-
-<div class="roomArea">
-
-<input
-id="roomInput"
-placeholder="Enter Room Code">
-
-<button onclick="createRoom()">
-CREATE ROOM
-</button>
-
-<button onclick="joinRoom()">
-JOIN ROOM
-</button>
-
-<button onclick="randomMatch()">
-RANDOM MATCH
-</button>
-
-</div>
-
-<h2 id="turnText">
-TURN : RED
-</h2>
 
 <div class="board"
 id="board">
@@ -363,76 +249,7 @@ id="board">
 
 <div id="winner"></div>
 
-<div class="overlay"
-id="winScreen">
-
-<h2 id="winText">
-WINNER
-</h2>
-
-<button onclick="location.reload()">
-🔄 PLAY AGAIN
-</button>
-
-</div>
-
-<audio id="moveSound">
-<source src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3">
-</audio>
-
 <script>
-
-let wallet = 1000;
-
-function createRoom(){
-
-let code =
-Math.floor(
-1000 + Math.random()*9000
-);
-
-alert(
-"ROOM CREATED : "+code
-);
-
-}
-
-function joinRoom(){
-
-let room =
-document.getElementById(
-"roomInput"
-).value;
-
-if(room==""){
-
-alert("ENTER ROOM CODE");
-
-return;
-
-}
-
-alert(
-"ROOM JOINED : "+room
-);
-
-}
-
-function randomMatch(){
-
-alert(
-"SEARCHING PLAYERS..."
-);
-
-setTimeout(()=>{
-
-alert(
-"MATCH FOUND ✅"
-);
-
-},2000);
-
-}
 
 const board =
 document.getElementById("board");
@@ -644,36 +461,13 @@ currentTurn=0;
 document.getElementById(
 "turnText"
 ).innerHTML =
-"TURN : "+
 turns[currentTurn];
 
 drawTokens();
 
-if(
-turns[currentTurn]!="RED"
-){
-
-setTimeout(aiPlay,1000);
-
-}
-
 }
 
 function rollDice(){
-
-if(
-turns[currentTurn]!="RED"
-){
-
-return;
-
-}
-
-rollNow();
-
-}
-
-function rollNow(){
 
 const faces = [
 "⚀","⚁","⚂","⚃","⚄","⚅"
@@ -702,7 +496,9 @@ faces[currentDice-1];
 
 function moveToken(player,index){
 
-if(player!=turns[currentTurn]){
+if(
+player!=turns[currentTurn]
+){
 
 return;
 
@@ -713,10 +509,6 @@ if(currentDice==0){
 return;
 
 }
-
-document.getElementById(
-"moveSound"
-).play();
 
 let token =
 players[player][index];
@@ -729,7 +521,13 @@ token.pos=0;
 
 drawTokens();
 
-finishMove(player,index);
+if(currentDice!=6){
+
+nextTurn();
+
+}
+
+currentDice=0;
 
 }
 
@@ -753,13 +551,6 @@ if(steps>0){
 
 token.pos++;
 
-if(token.pos>=path.length){
-
-token.pos=
-path.length-1;
-
-}
-
 steps--;
 
 drawTokens();
@@ -770,18 +561,13 @@ else{
 
 clearInterval(move);
 
-finishMove(
-player,
-index
-);
+finishMove(player,index);
 
 }
 
-},120);
+},140);
 
 }
-
-currentDice=0;
 
 }
 
@@ -794,7 +580,10 @@ if(
 token.pos>=path.length-1
 ){
 
-showWinner(player);
+token.pos=
+path.length-1;
+
+checkWinner(player);
 
 return;
 
@@ -804,11 +593,13 @@ killCheck(player,index);
 
 drawTokens();
 
-setTimeout(()=>{
+if(currentDice!=6){
 
 nextTurn();
 
-},500);
+}
+
+currentDice=0;
 
 }
 
@@ -846,119 +637,32 @@ t.pos=-1;
 
 }
 
-function aiPlay(){
+function checkWinner(player){
 
-rollNow();
+let completed = 0;
 
-let ai =
-turns[currentTurn];
-
-let tokens =
-players[ai];
-
-let choice = 0;
-
-for(let i=0;i<4;i++){
+players[player].forEach(t=>{
 
 if(
-tokens[i].pos!=-1
-||
-currentDice==6
+t.pos>=path.length-1
 ){
 
-choice=i;
-
-break;
+completed++;
 
 }
 
-}
+});
 
-setTimeout(()=>{
-
-moveToken(ai,choice);
-
-},700);
-
-}
-
-function showWinner(player){
+if(completed==4){
 
 document.getElementById(
 "winner"
 ).innerHTML =
-"🏆 "+player+" WINS 🎉";
-
-document.getElementById(
-"winText"
-).innerHTML =
 "🏆 "+player+" WINS";
 
-document.getElementById(
-"winScreen"
-).style.display=
-"flex";
-
-if(player=="RED"){
-
-wallet += 100;
-
-alert(
-"YOU WON ₹100 💰"
-);
-
 }
 
-confetti();
-
-}
-
-function confetti(){
-
-for(let i=0;i<150;i++){
-
-const div =
-document.createElement("div");
-
-div.style.position="fixed";
-
-div.style.width="10px";
-
-div.style.height="10px";
-
-div.style.background=
-["red","yellow","blue","green"]
-[Math.floor(Math.random()*4)];
-
-div.style.left=
-Math.random()*100+"vw";
-
-div.style.top="-10px";
-
-div.style.zIndex="9999";
-
-document.body.appendChild(div);
-
-let fall =
-setInterval(()=>{
-
-div.style.top=
-parseInt(div.style.top)+5+"px";
-
-if(
-parseInt(div.style.top)>
-window.innerHeight
-){
-
-clearInterval(fall);
-
-div.remove();
-
-}
-
-},30);
-
-}
+drawTokens();
 
 }
 
