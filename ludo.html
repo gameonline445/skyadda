@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>FULL REAL LUDO</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ludo King Style</title>
 
 <style>
 
@@ -17,290 +12,277 @@ margin:0;
 padding:0;
 background:#111;
 font-family:Arial;
-text-align:center;
 color:white;
+text-align:center;
 overflow-x:hidden;
 }
 
 h1{
-margin-top:20px;
-font-size:42px;
+margin-top:15px;
+font-size:38px;
+}
+
+.topbar{
+font-size:22px;
+margin-top:10px;
 }
 
 .board{
-
-width:390px;
-height:390px;
-
+width:360px;
+height:360px;
 margin:20px auto;
-
 display:grid;
-
 grid-template-columns:repeat(15,1fr);
-
 grid-template-rows:repeat(15,1fr);
-
 background:white;
-
-border-radius:20px;
-
+border:4px solid #222;
+border-radius:15px;
 overflow:hidden;
-
 }
 
 .cell{
-
-border:1px solid #ddd;
-
+border:1px solid #ccc;
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
-font-size:16px;
-
+font-size:18px;
 font-weight:bold;
-
+box-sizing:border-box;
 }
 
-.red{
-background:red;
+.red-home{
+background:#ff2e2e;
 }
 
-.green{
-background:green;
+.green-home{
+background:#00b33c;
 }
 
-.blue{
-background:blue;
+.yellow-home{
+background:#ffd500;
 }
 
-.yellow{
-background:gold;
+.blue-home{
+background:#1f5eff;
 }
 
-.white{
-background:white;
+.path{
+background:#fff;
 }
 
-.safe{
-background:#ccc;
+.red-path{
+background:#ff9999;
+}
+
+.green-path{
+background:#99ffbb;
+}
+
+.yellow-path{
+background:#fff099;
+}
+
+.blue-path{
+background:#99bbff;
 }
 
 .center{
-
-background:black;
+background:#111;
 color:white;
-font-size:28px;
-
+font-size:24px;
 }
 
 .token{
+width:18px;
+height:18px;
+border-radius:50%;
+border:2px solid white;
+}
 
-font-size:22px;
+.red-token{
+background:red;
+}
 
+.green-token{
+background:green;
+}
+
+.yellow-token{
+background:gold;
+}
+
+.blue-token{
+background:blue;
+}
+
+.controls{
+margin-top:20px;
 }
 
 #dice{
-
 font-size:70px;
-margin-top:20px;
-
+margin-top:10px;
 }
 
 button{
-
 padding:18px 50px;
-
-font-size:28px;
-
+font-size:24px;
 font-weight:bold;
-
 border:none;
-
 border-radius:20px;
-
 background:#8a2cff;
-
 color:white;
-
 margin-top:20px;
+}
 
+.status{
+font-size:24px;
+margin-top:15px;
 }
 
 #winner{
-
 font-size:35px;
-
-margin-top:20px;
-
 color:#00ff90;
-
+margin-top:20px;
 }
 
-.info{
-
-font-size:25px;
-
+.wallet{
 margin-top:10px;
-
+font-size:22px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<h1>
+<h1>🎮 LUDO KING STYLE</h1>
 
-🎮 FULL REAL LUDO
-
-</h1>
-
-<div class="info">
-
-Current Turn :
-<span id="turn">
-
-RED
-
-</span>
-
+<div class="topbar">
+Turn : <span id="turnText">RED</span>
 </div>
 
-<div class="board" id="board">
-
+<div class="wallet">
+🏆 Winner gets ₹20
 </div>
 
-<div id="dice">
+<div class="board" id="board"></div>
 
-1
+<div class="controls">
 
-</div>
+<div id="dice">1</div>
 
 <button onclick="rollDice()">
-
 🎲 ROLL DICE
-
 </button>
 
-<div id="winner">
+<div class="status" id="status">
+Game Started
+</div>
+
+<div id="winner"></div>
 
 </div>
 
 <script>
 
-const board =
-document.getElementById("board");
+const board = document.getElementById("board");
 
-for(let i=1;i<=225;i++){
+for(let row=0; row<15; row++){
 
-const cell =
-document.createElement("div");
+for(let col=0; col<15; col++){
 
-cell.className = "cell white";
+const cell = document.createElement("div");
+cell.classList.add("cell");
 
-if(i<=36){
-
-cell.classList.add("red");
-
+if(row < 6 && col < 6){
+cell.classList.add("red-home");
 }
 
-if(i>=46 && i<=81){
-
-cell.classList.add("green");
-
+else if(row < 6 && col > 8){
+cell.classList.add("green-home");
 }
 
-if(i>=136 && i<=171){
-
-cell.classList.add("blue");
-
+else if(row > 8 && col < 6){
+cell.classList.add("blue-home");
 }
 
-if(i>=181 && i<=216){
-
-cell.classList.add("yellow");
-
+else if(row > 8 && col > 8){
+cell.classList.add("yellow-home");
 }
 
-if(i==113){
-
+else if(row == 7 && col == 7){
 cell.classList.add("center");
-
 cell.innerHTML = "🏆";
+}
 
+else{
+cell.classList.add("path");
 }
 
 board.appendChild(cell);
 
 }
 
-let dice = 1;
+}
+
+const cells = document.querySelectorAll(".cell");
+
+const path = [
+6,7,8,23,38,53,68,83,98,113,128,127,
+126,125,124,123,122,121,136,151,166,
+181,196,211,212,213,214,215,216,217,
+218,219,220,205,190,175,160,145,130,
+115,100,85,70,55,40,25,10,9
+];
+
+const players = {
+RED:{
+position:-1,
+class:"red-token"
+},
+GREEN:{
+position:-1,
+class:"green-token"
+},
+YELLOW:{
+position:-1,
+class:"yellow-token"
+},
+BLUE:{
+position:-1,
+class:"blue-token"
+}
+};
 
 let currentPlayer = "RED";
 
-let positions = {
+const turns = ["RED","GREEN","YELLOW","BLUE"];
 
-RED:0,
-GREEN:0,
-BLUE:0,
-YELLOW:0
-
-};
-
-let path = [];
-
-for(let i=1;i<=225;i++){
-
-path.push(i);
-
-}
-
-function updateTokens(){
+function clearTokens(){
 
 document.querySelectorAll(".token")
-.forEach(t=>t.remove());
-
-for(let player in positions){
-
-let pos = positions[player];
-
-if(pos>0 && pos<225){
-
-const token =
-document.createElement("div");
-
-token.className = "token";
-
-if(player=="RED"){
-
-token.innerHTML = "🔴";
+.forEach(token=>token.remove());
 
 }
 
-if(player=="GREEN"){
+function drawTokens(){
 
-token.innerHTML = "🟢";
+clearTokens();
 
-}
+for(let player in players){
 
-if(player=="BLUE"){
+let pos = players[player].position;
 
-token.innerHTML = "🔵";
+if(pos >= 0 && pos < path.length){
 
-}
+const token = document.createElement("div");
 
-if(player=="YELLOW"){
+token.classList.add("token");
 
-token.innerHTML = "🟡";
+token.classList.add(players[player].class);
 
-}
-
-board.children[pos-1]
-.appendChild(token);
+cells[path[pos]].appendChild(token);
 
 }
 
@@ -310,68 +292,123 @@ board.children[pos-1]
 
 function nextTurn(){
 
-if(currentPlayer=="RED"){
+let index = turns.indexOf(currentPlayer);
 
-currentPlayer="GREEN";
+index++;
 
+if(index >= turns.length){
+index = 0;
 }
 
-else if(currentPlayer=="GREEN"){
+currentPlayer = turns[index];
 
-currentPlayer="BLUE";
-
-}
-
-else if(currentPlayer=="BLUE"){
-
-currentPlayer="YELLOW";
-
-}
-
-else{
-
-currentPlayer="RED";
-
-}
-
-document.getElementById(
-"turn"
-).innerHTML = currentPlayer;
+document.getElementById("turnText")
+.innerHTML = currentPlayer;
 
 }
 
 function rollDice(){
 
-dice =
-Math.floor(Math.random()*6)+1;
+let dice = Math.floor(Math.random()*6)+1;
 
-document.getElementById(
-"dice"
-).innerHTML = dice;
+const faces = {
+1:"⚀",
+2:"⚁",
+3:"⚂",
+4:"⚃",
+5:"⚄",
+6:"⚅"
+};
 
-positions[currentPlayer] += dice;
+document.getElementById("dice")
+.innerHTML = faces[dice];
 
-if(positions[currentPlayer]>=225){
+let player = players[currentPlayer];
 
-positions[currentPlayer]=225;
+if(player.position == -1){
 
-document.getElementById(
-"winner"
-).innerHTML =
-"🏆 "+currentPlayer+" WINS";
+if(dice == 6){
+player.position = 0;
+
+document.getElementById("status")
+.innerHTML = currentPlayer + " entered board";
 
 }
 
-updateTokens();
+else{
+
+document.getElementById("status")
+.innerHTML = currentPlayer + " needs 6";
 
 nextTurn();
+return;
 
 }
 
-updateTokens();
+}
+
+else{
+
+player.position += dice;
+
+if(player.position >= path.length-1){
+
+player.position = path.length-1;
+
+endGame(currentPlayer);
+
+}
+
+checkKills(currentPlayer);
+
+}
+
+if(dice != 6){
+nextTurn();
+}
+
+updateBoard();
+
+}
+
+function checkKills(activePlayer){
+
+for(let player in players){
+
+if(player != activePlayer){
+
+if(players[player].position == players[activePlayer].position){
+
+if(players[player].position > 0){
+
+players[player].position = -1;
+
+}
+
+}
+
+}
+
+}
+
+}
+
+function updateBoard(){
+
+drawTokens();
+
+}
+
+function endGame(player){
+
+document.getElementById("winner")
+.innerHTML = "🏆 " + player + " WINS";
+
+}
+
+updateBoard();
 
 </script>
 
 </body>
-
 </html>
