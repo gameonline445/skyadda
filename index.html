@@ -13,82 +13,82 @@ content="width=device-width, initial-scale=1.0">
 body{
 margin:0;
 font-family:Arial;
-background:#e8dfb9;
-padding-bottom:100px;
+background:#ded5af;
 }
 
-.topbar{
+.top{
 background:black;
 color:white;
-padding:20px;
 text-align:center;
-font-size:35px;
+padding:30px;
+font-size:55px;
 font-weight:bold;
 }
 
-.wallet{
+.walletBox{
 display:flex;
-justify-content:space-around;
-margin-top:30px;
+justify-content:center;
+margin-top:40px;
 }
 
-.box{
+.card{
 background:white;
-width:140px;
-height:140px;
-border-radius:20px;
+width:220px;
+padding:35px;
+border-radius:30px;
 text-align:center;
-padding-top:20px;
 font-size:35px;
 font-weight:bold;
 }
 
-.box p{
-font-size:20px;
-}
-
-.mainbtn{
-margin-top:25px;
-padding:18px 40px;
-font-size:24px;
-background:#00c9ff;
-color:white;
-border:none;
-border-radius:15px;
-font-weight:bold;
-}
-
-.battle{
-background:white;
-margin:20px;
+.btn{
+display:block;
+width:380px;
+margin:35px auto;
 padding:25px;
-border-radius:20px;
+font-size:30px;
+font-weight:bold;
+border:none;
+border-radius:25px;
+background:#17cfff;
+color:white;
+}
+
+.game{
+background:white;
+margin:40px;
+padding:40px;
+border-radius:30px;
 text-align:center;
+}
+
+.playBtn{
+margin-top:30px;
+padding:22px;
+width:320px;
+border:none;
+border-radius:25px;
+background:#17cfff;
+color:white;
+font-size:28px;
+font-weight:bold;
 }
 
 .bottom{
 position:fixed;
 bottom:0;
 left:0;
-right:0;
+width:100%;
 background:black;
 display:flex;
 justify-content:space-around;
-padding:10px;
+padding:18px 0;
+color:white;
+font-size:22px;
 }
 
 .item{
 text-align:center;
-font-size:18px;
-color:white;
-}
-
-.item p{
-margin:5px 0 0;
-}
-
-a{
-text-decoration:none;
 }
 
 </style>
@@ -97,120 +97,106 @@ text-decoration:none;
 
 <body>
 
-<div class="topbar">
+<div class="top">
 
 SKY ADDA
 
 </div>
 
-<div class="wallet">
+<div class="walletBox">
 
-<div class="box">
+<div class="card">
 
-💰 ₹<span id="wallet">0</span>
+💰
 
-<p>Wallet</p>
+<br><br>
+
+₹<span id="wallet">
+
+0
+
+</span>
+
+<br><br>
+
+Wallet
 
 </div>
 
-<div class="box">
-
-🏆 ₹0
-
-<p>Winning</p>
-
 </div>
 
-</div>
-
-<center>
-
-<a href="payment.html">
-
-<button class="mainbtn">
+<button class="btn"
+onclick="location.href='addmoney.html'">
 
 Add Money
 
 </button>
 
-</a>
-
-<br><br>
-
-<a href="withdraw.html">
-
-<button class="mainbtn">
+<button class="btn"
+onclick="location.href='withdraw.html'">
 
 Withdraw
 
 </button>
 
-</a>
+<div class="game">
 
-</center>
+<h1>
 
-<div class="battle">
+🎮 Play Ludo
 
-<h2>🎮 Play Ludo</h2>
+</h1>
 
-<a href="ludo.html">
-
-<button class="mainbtn">
+<button class="playBtn">
 
 PLAY NOW
 
 </button>
 
-</a>
-
 </div>
 
 <div class="bottom">
 
-<a href="index.html">
-
 <div class="item">
-🏠
-<p>Home</p>
+
+🏠<br>
+
+Home
+
 </div>
 
-</a>
+<div class="item"
+onclick="location.href='wallet.html'">
 
-<a href="wallet.html">
+💰<br>
 
-<div class="item">
-💰
-<p>Wallet</p>
+Wallet
+
 </div>
 
-</a>
-
-<a href="refer.html">
-
 <div class="item">
-🎁
-<p>Refer</p>
+
+🎁<br>
+
+Refer
+
 </div>
 
-</a>
-
-<a href="support.html">
-
 <div class="item">
-☎️
-<p>Support</p>
+
+☎️<br>
+
+Support
+
 </div>
 
-</a>
-
-<a href="profile.html">
-
 <div class="item">
-👤
-<p>Profile</p>
-</div>
 
-</a>
+👤<br>
+
+Profile
+
+</div>
 
 </div>
 
@@ -232,17 +218,17 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBNnnLu7HpCImLl5cIWKmB_eLjsbaR6zxg",
+apiKey: "YOUR_API_KEY",
 
 authDomain: "skyadda-1d849.firebaseapp.com",
 
 projectId: "skyadda-1d849",
 
-storageBucket: "skyadda-1d849.firebasestorage.app",
+storageBucket: "skyadda-1d849.appspot.com",
 
-messagingSenderId: "929894889505",
+messagingSenderId: "YOUR_SENDER_ID",
 
-appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
+appId: "YOUR_APP_ID"
 
 };
 
@@ -250,18 +236,32 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-let uid = localStorage.getItem("uid");
+const uid =
+localStorage.getItem("uid");
 
 async function loadWallet(){
 
-const ref = doc(db,"users",uid);
+if(!uid){
 
-const snap = await getDoc(ref);
+return;
 
-if(snap.exists()){
+}
 
-document.getElementById("wallet")
-.innerHTML = snap.data().money || 0;
+const userRef =
+doc(db,"users",uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
+
+const data =
+userSnap.data();
+
+document.getElementById(
+"wallet"
+).innerHTML =
+data.money || 0;
 
 }
 
