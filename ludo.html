@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>REAL GAMEPLAY ENGINE LUDO</title>
+<title>REAL FINAL GAMEPLAY LUDO</title>
 
 <style>
 
@@ -24,7 +24,7 @@ font-size:34px;
 margin-top:15px;
 }
 
-.turnBox{
+.turn{
 font-size:24px;
 margin-top:10px;
 }
@@ -50,6 +50,8 @@ overflow:hidden;
 border:5px solid #222;
 
 box-shadow:0 0 35px rgba(0,0,0,0.9);
+
+position:relative;
 
 }
 
@@ -116,7 +118,7 @@ transition:0.12s linear;
 
 box-shadow:0 0 10px rgba(0,0,0,0.7);
 
-z-index:2;
+z-index:5;
 
 }
 
@@ -181,9 +183,9 @@ animation:shake 0.5s;
 
 button{
 
-padding:15px 35px;
+padding:16px 38px;
 
-font-size:20px;
+font-size:22px;
 
 font-weight:bold;
 
@@ -215,6 +217,13 @@ color:#00ff90;
 
 }
 
+.info{
+
+font-size:18px;
+margin-top:10px;
+
+}
+
 </style>
 
 </head>
@@ -222,16 +231,20 @@ color:#00ff90;
 <body>
 
 <h1>
-🎮 REAL GAMEPLAY LUDO
+🎮 REAL FINAL LUDO
 </h1>
 
-<div class="turnBox">
+<div class="turn">
 
 TURN :
 <span id="turnText">
 RED
 </span>
 
+</div>
+
+<div class="info">
+🔥 REAL GAMEPLAY ENGINE
 </div>
 
 <div class="board"
@@ -521,13 +534,9 @@ token.pos=0;
 
 drawTokens();
 
-if(currentDice!=6){
-
-nextTurn();
-
-}
-
 currentDice=0;
+
+return;
 
 }
 
@@ -539,8 +548,6 @@ return;
 
 }
 
-else{
-
 let steps =
 currentDice;
 
@@ -550,6 +557,13 @@ setInterval(()=>{
 if(steps>0){
 
 token.pos++;
+
+if(token.pos>=path.length){
+
+token.pos=
+path.length-1;
+
+}
 
 steps--;
 
@@ -565,9 +579,7 @@ finishMove(player,index);
 
 }
 
-},140);
-
-}
+},120);
 
 }
 
@@ -576,22 +588,19 @@ function finishMove(player,index){
 let token =
 players[player][index];
 
+killCheck(player,index);
+
+drawTokens();
+
 if(
 token.pos>=path.length-1
 ){
-
-token.pos=
-path.length-1;
 
 checkWinner(player);
 
 return;
 
 }
-
-killCheck(player,index);
-
-drawTokens();
 
 if(currentDice!=6){
 
@@ -618,11 +627,11 @@ if(
 t.pos==
 active.pos
 &&
+t.pos!=-1
+&&
 !safeSpots.includes(
 path[t.pos]
 )
-&&
-t.pos>0
 ){
 
 t.pos=-1;
@@ -639,7 +648,7 @@ t.pos=-1;
 
 function checkWinner(player){
 
-let completed = 0;
+let complete = 0;
 
 players[player].forEach(t=>{
 
@@ -647,13 +656,13 @@ if(
 t.pos>=path.length-1
 ){
 
-completed++;
+complete++;
 
 }
 
 });
 
-if(completed==4){
+if(complete==4){
 
 document.getElementById(
 "winner"
@@ -661,8 +670,6 @@ document.getElementById(
 "🏆 "+player+" WINS";
 
 }
-
-drawTokens();
 
 }
 
