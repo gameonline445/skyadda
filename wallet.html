@@ -15,47 +15,23 @@ margin:0;
 font-family:Arial;
 background:#111;
 color:white;
+text-align:center;
 }
 
 .top{
 background:black;
 padding:20px;
-text-align:center;
 font-size:35px;
 font-weight:bold;
 }
 
-.card{
+.box{
 background:#1e1e1e;
 margin:20px;
 padding:25px;
 border-radius:20px;
 font-size:24px;
-line-height:45px;
-}
-
-.history{
-background:#2a2a2a;
-margin-top:15px;
-padding:15px;
-border-radius:15px;
-font-size:20px;
-}
-
-.btn{
-width:90%;
-padding:18px;
-font-size:22px;
-border:none;
-border-radius:15px;
-background:#00cfff;
-color:white;
-font-weight:bold;
-margin-top:20px;
-}
-
-a{
-text-decoration:none;
+line-height:50px;
 }
 
 </style>
@@ -70,7 +46,7 @@ text-decoration:none;
 
 </div>
 
-<div class="card">
+<div class="box">
 
 💰 Wallet Balance :
 ₹<span id="wallet">
@@ -88,75 +64,7 @@ text-decoration:none;
 
 </span>
 
-<br><br>
-
-📈 Total Deposit :
-₹<span id="deposit">
-
-0
-
-</span>
-
-<br><br>
-
-💸 Total Withdraw :
-₹<span id="withdraw">
-
-0
-
-</span>
-
 </div>
-
-<div class="card">
-
-<h2>🧾 Transaction History</h2>
-
-<div class="history">
-
-💰 Deposit ₹500
-
-</div>
-
-<div class="history">
-
-💸 Withdraw ₹200
-
-</div>
-
-<div class="history">
-
-🏆 Winning ₹1000
-
-</div>
-
-</div>
-
-<center>
-
-<a href="payment.html">
-
-<button class="btn">
-
-ADD MONEY
-
-</button>
-
-</a>
-
-<br>
-
-<a href="withdraw.html">
-
-<button class="btn">
-
-WITHDRAW
-
-</button>
-
-</a>
-
-</center>
 
 <script type="module">
 
@@ -190,33 +98,35 @@ appId: "1:929894889505:web:6e76e0eb701ffe89d60b60"
 
 };
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const db =
+getFirestore(app);
 
-let uid = localStorage.getItem("uid");
+let uid =
+localStorage.getItem("uid");
 
 async function loadWallet(){
 
-const ref = doc(db,"users",uid);
+const ref =
+doc(db,"users",uid);
 
-const snap = await getDoc(ref);
+const snap =
+await getDoc(ref);
 
 if(snap.exists()){
 
-const data = snap.data();
+const data =
+snap.data();
 
 document.getElementById("wallet")
-.innerHTML = data.money || 0;
+.innerHTML =
+data.money || 0;
 
 document.getElementById("winning")
-.innerHTML = data.winning || 0;
-
-document.getElementById("deposit")
-.innerHTML = data.deposit || 0;
-
-document.getElementById("withdraw")
-.innerHTML = data.withdraw || 0;
+.innerHTML =
+data.winning || 0;
 
 }
 
