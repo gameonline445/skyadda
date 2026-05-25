@@ -2,39 +2,48 @@
 <html>
 
 <head>
-  <title>Wallet</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
+<title>Wallet</title>
 
-    body{
-      background:black;
-      color:white;
-      font-family:Arial;
-      padding:20px;
-    }
+<style>
 
-    .box{
-      background:#16161d;
-      padding:20px;
-      border-radius:20px;
-      margin-top:20px;
-    }
+body{
+background:black;
+font-family:Arial;
+color:white;
+padding:20px;
+}
 
-    button{
-      width:100%;
-      padding:18px;
-      border:none;
-      border-radius:15px;
-      background:#11c5f5;
-      color:white;
-      font-size:25px;
-      font-weight:bold;
-      margin-top:20px;
-    }
+.box{
+background:#16161d;
+padding:25px;
+border-radius:20px;
+margin-top:20px;
+}
 
-  </style>
+button{
+width:100%;
+padding:20px;
+border:none;
+border-radius:15px;
+background:#17c9f5;
+color:white;
+font-size:22px;
+font-weight:bold;
+margin-top:20px;
+}
+
+h1{
+font-size:60px;
+}
+
+h2{
+font-size:28px;
+}
+
+</style>
 
 </head>
 
@@ -44,21 +53,25 @@
 
 <div class="box">
 
-  <h2 id="walletBalance">💰 Wallet Balance : ₹0</h2>
+<h2 id="walletBalance">
+💰 Wallet Balance : ₹0
+</h2>
 
-  <br>
+<br><br>
 
-  <h2 id="winningBalance">🏆 Winning Balance : ₹0</h2>
+<h2 id="winningBalance">
+🏆 Winning Balance : ₹0
+</h2>
 
 </div>
 
 <div class="box">
 
-  <h1>🧾 Transaction History</h1>
+<h1>🧾 Transaction History</h1>
 
-  <h3>💵 Deposit ₹1000</h3>
+<h2>💵 Deposit ₹1000</h2>
 
-  <h3>🏆 Winning ₹0</h3>
+<h2>🏆 Winning ₹0</h2>
 
 </div>
 
@@ -68,27 +81,33 @@
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+getFirestore,
+doc,
+getDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-  apiKey: "YOUR_API_KEY",
+apiKey: "YOUR_API_KEY",
 
-  authDomain: "skyadda-1d849.firebaseapp.com",
+authDomain: "skyadda-1d849.firebaseapp.com",
 
-  projectId: "skyadda-1d849",
+projectId: "skyadda-1d849",
 
-  storageBucket: "skyadda-1d849.appspot.com",
+storageBucket: "skyadda-1d849.appspot.com",
 
-  messagingSenderId: "YOUR_SENDER_ID",
+messagingSenderId: "YOUR_SENDER_ID",
 
-  appId: "YOUR_APP_ID"
+appId: "YOUR_APP_ID"
 
 };
 
@@ -96,27 +115,27 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const uid = localStorage.getItem("uid");
+const uid = "AEp1CmD980TmxnrdCiCUVFC7WMB2";
 
-async function loadWallet() {
+async function loadWallet(){
 
-  if (!uid) return;
+const userRef = doc(db,"users",uid);
 
-  const userRef = doc(db, "users", uid);
+const userSnap = await getDoc(userRef);
 
-  const userSnap = await getDoc(userRef);
+if(userSnap.exists()){
 
-  if (userSnap.exists()) {
+const data = userSnap.data();
 
-    const data = userSnap.data();
+document.getElementById("walletBalance").innerHTML =
 
-    document.getElementById("walletBalance").innerHTML =
-      "💰 Wallet Balance : ₹" + (data.money || 0);
+"💰 Wallet Balance : ₹" + (data.money || 0);
 
-    document.getElementById("winningBalance").innerHTML =
-      "🏆 Winning Balance : ₹" + (data.winning || 0);
+document.getElementById("winningBalance").innerHTML =
 
-  }
+"🏆 Winning Balance : ₹" + (data.winning || 0);
+
+}
 
 }
 
