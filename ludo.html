@@ -4,11 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>REAL CUSTOM LUDO</title>
+<title>REAL CUSTOM LUDO NEXT</title>
 
 <style>
 
@@ -28,7 +26,7 @@ font-size:38px;
 }
 
 .turnBox{
-font-size:25px;
+font-size:24px;
 margin-top:10px;
 }
 
@@ -69,10 +67,6 @@ position:relative;
 
 box-sizing:border-box;
 
-font-size:14px;
-
-font-weight:bold;
-
 }
 
 .red-home{
@@ -102,17 +96,17 @@ background:#ddd;
 .center{
 background:black;
 color:white;
-font-size:24px;
+font-size:22px;
 }
 
 .token{
 
-width:22px;
-height:22px;
+width:20px;
+height:20px;
 
 border-radius:50%;
 
-border:3px solid white;
+border:2px solid white;
 
 position:absolute;
 
@@ -120,9 +114,9 @@ cursor:pointer;
 
 transition:0.3s;
 
-box-shadow:0 0 10px rgba(0,0,0,0.5);
-
 animation:pop 0.3s;
+
+box-shadow:0 0 10px rgba(0,0,0,0.5);
 
 }
 
@@ -154,7 +148,7 @@ background:deepskyblue;
 background:gold;
 }
 
-.activeTurn{
+.active{
 
 animation:glow 1s infinite;
 
@@ -179,28 +173,13 @@ box-shadow:0 0 5px white;
 #dice{
 
 font-size:90px;
-
 margin-top:10px;
-
-animation:diceJump 0.5s;
-
-}
-
-@keyframes diceJump{
-
-0%{
-transform:translateY(-20px);
-}
-
-100%{
-transform:translateY(0);
-}
 
 }
 
 button{
 
-padding:20px 60px;
+padding:18px 60px;
 
 font-size:26px;
 
@@ -222,41 +201,15 @@ margin-top:20px;
 
 box-shadow:0 0 20px purple;
 
-transition:0.3s;
-
-}
-
-button:active{
-
-transform:scale(0.95);
-
 }
 
 #winner{
 
-font-size:38px;
+font-size:36px;
 
 margin-top:20px;
 
 color:#00ff90;
-
-animation:winnerGlow 1s infinite;
-
-}
-
-@keyframes winnerGlow{
-
-0%{
-text-shadow:0 0 5px #00ff90;
-}
-
-50%{
-text-shadow:0 0 20px #00ff90;
-}
-
-100%{
-text-shadow:0 0 5px #00ff90;
-}
 
 }
 
@@ -281,13 +234,15 @@ margin-top:10px;
 
 TURN :
 <span id="turnText">
+
 RED
+
 </span>
 
 </div>
 
 <div class="info">
-⭐ Safe Boxes Enabled
+⭐ Next Upgrade Version
 </div>
 
 <div class="board"
@@ -296,11 +251,15 @@ id="board">
 </div>
 
 <div id="dice">
+
 ⚀
+
 </div>
 
 <button onclick="rollDice()">
+
 🎲 ROLL DICE
+
 </button>
 
 <div id="winner">
@@ -438,6 +397,15 @@ YELLOW:[
 
 };
 
+const homePositions = {
+
+RED:[0,1,15,16],
+GREEN:[13,14,28,29],
+BLUE:[195,196,210,211],
+YELLOW:[208,209,223,224]
+
+};
+
 const turns = [
 "RED",
 "GREEN",
@@ -465,12 +433,6 @@ for(let player in players){
 players[player].forEach(
 (tokenData,index)=>{
 
-if(
-tokenData.pos>=0
-&&
-tokenData.pos<path.length
-){
-
 const token =
 document.createElement("div");
 
@@ -488,7 +450,7 @@ turns[currentTurn]
 ){
 
 token.classList.add(
-"activeTurn"
+"active"
 );
 
 }
@@ -501,6 +463,18 @@ index
 );
 
 };
+
+if(tokenData.pos==-1){
+
+cells[
+homePositions[player][index]
+].appendChild(token);
+
+}
+
+else if(
+tokenData.pos<path.length
+){
 
 cells[
 path[tokenData.pos]
@@ -552,6 +526,12 @@ faces[currentDice-1];
 function moveToken(player,index){
 
 if(player!=turns[currentTurn]){
+
+return;
+
+}
+
+if(currentDice==0){
 
 return;
 
