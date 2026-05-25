@@ -8,16 +8,17 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>REAL LUDO UPGRADE</title>
+<title>REAL CUSTOM LUDO</title>
 
 <style>
 
 body{
 margin:0;
-background:#181818;
+padding:0;
+background:#121212;
 font-family:Arial;
-text-align:center;
 color:white;
+text-align:center;
 overflow-x:hidden;
 }
 
@@ -26,8 +27,8 @@ margin-top:15px;
 font-size:38px;
 }
 
-.turn{
-font-size:24px;
+.turnBox{
+font-size:25px;
 margin-top:10px;
 }
 
@@ -66,11 +67,11 @@ align-items:center;
 
 position:relative;
 
-font-size:15px;
+box-sizing:border-box;
+
+font-size:14px;
 
 font-weight:bold;
-
-box-sizing:border-box;
 
 }
 
@@ -82,12 +83,12 @@ background:#ff4d4d;
 background:#33cc66;
 }
 
-.yellow-home{
-background:#ffd633;
+.blue-home{
+background:#3366ff;
 }
 
-.blue-home{
-background:#4d79ff;
+.yellow-home{
+background:#ffd633;
 }
 
 .path{
@@ -106,16 +107,34 @@ font-size:24px;
 
 .token{
 
-width:18px;
-height:18px;
+width:22px;
+height:22px;
 
 border-radius:50%;
 
-border:2px solid white;
+border:3px solid white;
 
 position:absolute;
 
 cursor:pointer;
+
+transition:0.3s;
+
+box-shadow:0 0 10px rgba(0,0,0,0.5);
+
+animation:pop 0.3s;
+
+}
+
+@keyframes pop{
+
+0%{
+transform:scale(0);
+}
+
+100%{
+transform:scale(1);
+}
 
 }
 
@@ -124,56 +143,126 @@ background:red;
 }
 
 .g{
-background:green;
+background:limegreen;
 }
 
 .b{
-background:blue;
+background:deepskyblue;
 }
 
 .y{
 background:gold;
 }
 
+.activeTurn{
+
+animation:glow 1s infinite;
+
+}
+
+@keyframes glow{
+
+0%{
+box-shadow:0 0 5px white;
+}
+
+50%{
+box-shadow:0 0 20px white;
+}
+
+100%{
+box-shadow:0 0 5px white;
+}
+
+}
+
 #dice{
-font-size:70px;
-margin-top:15px;
+
+font-size:90px;
+
+margin-top:10px;
+
+animation:diceJump 0.5s;
+
+}
+
+@keyframes diceJump{
+
+0%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0);
+}
+
 }
 
 button{
 
-padding:18px 50px;
+padding:20px 60px;
 
-font-size:24px;
+font-size:26px;
 
 font-weight:bold;
 
 border:none;
 
-border-radius:20px;
+border-radius:25px;
 
-background:#8a2cff;
+background:linear-gradient(
+45deg,
+#8a2cff,
+#c84dff
+);
 
 color:white;
 
 margin-top:20px;
 
+box-shadow:0 0 20px purple;
+
+transition:0.3s;
+
+}
+
+button:active{
+
+transform:scale(0.95);
+
 }
 
 #winner{
 
-font-size:34px;
+font-size:38px;
 
 margin-top:20px;
 
 color:#00ff90;
+
+animation:winnerGlow 1s infinite;
+
+}
+
+@keyframes winnerGlow{
+
+0%{
+text-shadow:0 0 5px #00ff90;
+}
+
+50%{
+text-shadow:0 0 20px #00ff90;
+}
+
+100%{
+text-shadow:0 0 5px #00ff90;
+}
 
 }
 
 .info{
 
 font-size:20px;
-
 margin-top:10px;
 
 }
@@ -185,26 +274,20 @@ margin-top:10px;
 <body>
 
 <h1>
-
-🎮 REAL LUDO UPGRADE
-
+🎮 REAL CUSTOM LUDO
 </h1>
 
-<div class="turn">
+<div class="turnBox">
 
 TURN :
 <span id="turnText">
-
 RED
-
 </span>
 
 </div>
 
 <div class="info">
-
 ⭐ Safe Boxes Enabled
-
 </div>
 
 <div class="board"
@@ -213,15 +296,11 @@ id="board">
 </div>
 
 <div id="dice">
-
 ⚀
-
 </div>
 
 <button onclick="rollDice()">
-
 🎲 ROLL DICE
-
 </button>
 
 <div id="winner">
@@ -368,6 +447,8 @@ const turns = [
 
 let currentTurn = 0;
 
+let currentDice = 0;
+
 function clearTokens(){
 
 document.querySelectorAll(".token")
@@ -401,6 +482,17 @@ token.classList.add(
 tokenData.class
 );
 
+if(
+player==
+turns[currentTurn]
+){
+
+token.classList.add(
+"activeTurn"
+);
+
+}
+
 token.onclick=()=>{
 
 moveToken(
@@ -422,8 +514,6 @@ path[tokenData.pos]
 
 }
 
-let currentDice = 0;
-
 function nextTurn(){
 
 currentTurn++;
@@ -438,6 +528,8 @@ document.getElementById(
 "turnText"
 ).innerHTML =
 turns[currentTurn];
+
+drawTokens();
 
 }
 
