@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
@@ -14,7 +13,6 @@ content="width=device-width, initial-scale=1.0">
 
 body{
 margin:0;
-padding:0;
 font-family:Arial;
 background:#111;
 color:white;
@@ -23,7 +21,7 @@ text-align:center;
 
 h1{
 margin-top:20px;
-font-size:45px;
+font-size:40px;
 }
 
 .board{
@@ -38,7 +36,7 @@ margin-top:30px;
 width:70px;
 height:70px;
 background:white;
-border-radius:12px;
+border-radius:10px;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -58,14 +56,14 @@ color:white;
 }
 
 #dice{
-font-size:70px;
+font-size:60px;
 margin-top:30px;
 }
 
 button{
 margin-top:30px;
 padding:18px 40px;
-font-size:28px;
+font-size:25px;
 font-weight:bold;
 border:none;
 border-radius:18px;
@@ -75,8 +73,8 @@ color:white;
 
 #winner{
 font-size:35px;
-color:#00ff90;
 margin-top:30px;
+color:#00ff90;
 }
 
 </style>
@@ -121,7 +119,12 @@ margin-top:30px;
 <div class="cell" id="c22"></div>
 <div class="cell" id="c23"></div>
 <div class="cell" id="c24"></div>
-<div class="cell finish" id="c25">🏆</div>
+
+<div class="cell finish" id="c25">
+
+🏆
+
+</div>
 
 </div>
 
@@ -133,7 +136,7 @@ margin-top:30px;
 
 <button onclick="rollDice()">
 
-ROLL DICE
+🎲 ROLL DICE
 
 </button>
 
@@ -147,11 +150,12 @@ let position = 1;
 
 function rollDice(){
 
-const dice =
+let dice =
 Math.floor(Math.random()*6)+1;
 
-document.getElementById("dice")
-.innerHTML = dice;
+document.getElementById(
+"dice"
+).innerHTML = dice;
 
 document.getElementById(
 "c"+position
@@ -165,12 +169,12 @@ position += dice;
 
 if(position >= 25){
 
+position = 25;
+
 document.getElementById(
 "winner"
 ).innerHTML =
 "🏆 YOU WIN";
-
-position = 25;
 
 }
 
