@@ -3,14 +3,15 @@
 
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Wallet</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <style>
 
 body{
-background:black;
+background:#000;
 font-family:Arial;
 color:white;
 padding:20px;
@@ -18,29 +19,25 @@ padding:20px;
 
 .box{
 background:#16161d;
-padding:25px;
+padding:20px;
 border-radius:20px;
 margin-top:20px;
 }
 
 button{
 width:100%;
-padding:20px;
+padding:18px;
 border:none;
 border-radius:15px;
-background:#17c9f5;
+background:#12c8f5;
 color:white;
-font-size:22px;
+font-size:24px;
 font-weight:bold;
 margin-top:20px;
 }
 
-h1{
-font-size:60px;
-}
-
-h2{
-font-size:28px;
+a{
+text-decoration:none;
 }
 
 </style>
@@ -53,95 +50,66 @@ font-size:28px;
 
 <div class="box">
 
-<h2 id="walletBalance">
-💰 Wallet Balance : ₹0
+<h2>
+
+💰 Wallet Balance :
+₹1000
+
 </h2>
 
-<br><br>
+<br>
 
-<h2 id="winningBalance">
-🏆 Winning Balance : ₹0
+<h2>
+
+🏆 Winning Balance :
+₹0
+
 </h2>
 
 </div>
 
 <div class="box">
 
-<h1>🧾 Transaction History</h1>
+<h2>
 
-<h2>💵 Deposit ₹1000</h2>
+🧾 Transaction History
 
-<h2>🏆 Winning ₹0</h2>
+</h2>
+
+<h3>
+
+💵 Deposit ₹1000
+
+</h3>
+
+<h3>
+
+🏆 Winning ₹0
+
+</h3>
 
 </div>
 
-<button>ADD MONEY</button>
+<a href="payment.html">
 
-<button>WITHDRAW</button>
+<button>
 
-<script type="module">
+ADD MONEY
 
-import { initializeApp }
+</button>
 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+</a>
 
-import {
+<a href="withdraw.html">
 
-getFirestore,
-doc,
-getDoc
+<button>
 
-}
+WITHDRAW
 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+</button>
 
-const firebaseConfig = {
-
-apiKey: "YOUR_API_KEY",
-
-authDomain: "skyadda-1d849.firebaseapp.com",
-
-projectId: "skyadda-1d849",
-
-storageBucket: "skyadda-1d849.appspot.com",
-
-messagingSenderId: "YOUR_SENDER_ID",
-
-appId: "YOUR_APP_ID"
-
-};
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-const uid = "AEp1CmD980TmxnrdCiCUVFC7WMB2";
-
-async function loadWallet(){
-
-const userRef = doc(db,"users",uid);
-
-const userSnap = await getDoc(userRef);
-
-if(userSnap.exists()){
-
-const data = userSnap.data();
-
-document.getElementById("walletBalance").innerHTML =
-
-"💰 Wallet Balance : ₹" + (data.money || 0);
-
-document.getElementById("winningBalance").innerHTML =
-
-"🏆 Winning Balance : ₹" + (data.winning || 0);
-
-}
-
-}
-
-loadWallet();
-
-</script>
+</a>
 
 </body>
+
 </html>
